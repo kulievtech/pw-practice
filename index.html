@@ -169,26 +169,28 @@
         display: block;
       }
       .draggable,
-      .dropzone {
-        width: 60px;
-        height: 60px;
+      .dropzone,
+      .mouse-box {
         display: inline-block;
         text-align: center;
         line-height: 60px;
-        color: white;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: grab;
         user-select: none;
         margin: 5px;
       }
       .draggable {
+        width: 60px;
+        height: 60px;
         background: #e74c3c;
+        color: white;
       }
       .dropzone {
-        background: #f1c40f;
-        line-height: 100px;
         width: 100px;
         height: 100px;
+        background: #f1c40f;
+        color: #333;
+        line-height: 100px;
       }
       .mouse-box {
         width: 60px;
@@ -196,11 +198,6 @@
         background: #3498db;
         color: white;
         line-height: 60px;
-        text-align: center;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        cursor: grab;
-        display: inline-block;
       }
       .output {
         margin-top: 10px;
@@ -363,17 +360,14 @@
       <!-- Mouse Actions -->
       <h2>Mouse Actions</h2>
       <div class="section">
-        <div style="margin-bottom: 10px">
-          <div class="mouse-box" id="mouseBox">Drag Me</div>
-          <div class="dropzone" id="dropZone">Drop Here</div>
+        <p>Drag the box into the drop zone using mouse or Playwright mouse actions:</p>
+        <div style="display: flex; gap: 10px; align-items: center">
+          <div id="mouseBox" class="mouse-box">Drag Me</div>
+          <div id="dropZone" class="dropzone">Drop Here</div>
         </div>
-        <div style="margin-top: 10px">
-          <button id="mouseMoveBtn">Move Mouse</button>
-          <button id="mouseClickBtn">Click Mouse</button>
-          <button id="mouseDownUpBtn">Mouse Down/Up</button>
-          <button id="mouseWheelBtn">Scroll Wheel</button>
+        <div class="output" id="mouseOutput">
+          Drag the box into drop zone to see action.
         </div>
-        <div class="output" id="mouseOutput">No action yet</div>
       </div>
 
       <!-- Drag & Drop -->
@@ -392,7 +386,8 @@
       </div>
 
       <script>
-        /* Login Form */
+        /* JavaScript for all interactions */
+        // Login Form
         const loginForm = document.getElementById("loginForm");
         const loginMessage = document.getElementById("loginMessage");
         loginForm.addEventListener("submit", (e) => {
@@ -409,7 +404,7 @@
               : "Please enter username and password";
         });
 
-        /* Buttons */
+        // Buttons
         const btnOutput = document.getElementById("buttonOutput");
         document
           .getElementById("btnClick")
@@ -428,7 +423,7 @@
           btnOutput.textContent = "Right click detected";
         });
 
-        /* Form with Labels */
+        // Form with Labels
         const labelForm = document.getElementById("labelForm");
         const labelFormOutput = document.getElementById("labelFormOutput");
         labelForm.addEventListener("submit", (e) => {
@@ -441,7 +436,7 @@
               : "Please fill both fields";
         });
 
-        /* Search Box */
+        // Search Box
         const searchBox = document.getElementById("searchBox");
         const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
         const searchOutput = document.getElementById("searchOutput");
@@ -456,7 +451,7 @@
           searchOutput.textContent = term ? `Filtering for: ${term}` : "";
         });
 
-        /* Checkboxes */
+        // Checkboxes
         const checkboxOutput = document.getElementById("checkboxOutput");
         const checkboxes = document.querySelectorAll(".checkbox-group input");
         checkboxes.forEach((c) =>
@@ -470,7 +465,7 @@
           })
         );
 
-        /* Radio Buttons */
+        // Radio Buttons
         const radioOutput = document.getElementById("radioOutput");
         const radios = document.querySelectorAll(".radio-group input");
         radios.forEach((r) =>
@@ -480,7 +475,7 @@
           })
         );
 
-        /* Toggle Switch */
+        // Toggle Switch
         const toggleSwitch = document.getElementById("toggleSwitch");
         const toggleOutput = document.getElementById("toggleOutput");
         toggleSwitch.addEventListener(
@@ -491,7 +486,7 @@
             }`)
         );
 
-        /* Textarea */
+        // Textarea
         const textarea = document.getElementById("textArea");
         const textareaOutput = document.getElementById("textareaOutput");
         textarea.addEventListener(
@@ -499,7 +494,7 @@
           () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
         );
 
-        /* Button with data-testid */
+        // Button with data-testid
         const testIdButton = document.getElementById("testIdButton");
         const testIdOutput = document.getElementById("testIdOutput");
         testIdButton.addEventListener(
@@ -507,7 +502,7 @@
           () => (testIdOutput.textContent = "Data-testid button clicked")
         );
 
-        /* Product List */
+        // Product List
         const products = document.querySelectorAll(".product-item");
         const selectedProducts = document.getElementById("selectedProducts");
         products.forEach((item) =>
@@ -530,7 +525,7 @@
           );
         });
 
-        /* Hover Menu */
+        // Hover Menu
         const hoverOutput = document.getElementById("hoverOutput");
         const submenuItem = document.getElementById("submenuItem");
         submenuItem.addEventListener(
@@ -538,33 +533,63 @@
           () => (hoverOutput.textContent = "Submenu clicked!")
         );
 
-        /* Mouse Actions */
+        // Mouse Actions (drag into drop zone)
         const mouseBox = document.getElementById("mouseBox");
         const dropZone = document.getElementById("dropZone");
         const mouseOutput = document.getElementById("mouseOutput");
-        document.getElementById("mouseMoveBtn").addEventListener("click", () => {
-          mouseOutput.textContent = "Simulate mouse.move(100,200)";
-        });
-        document.getElementById("mouseClickBtn").addEventListener("click", () => {
-          mouseOutput.textContent = "Simulate mouse.click(150,250)";
-        });
-        document.getElementById("mouseDownUpBtn").addEventListener("click", () => {
-          mouseOutput.textContent = "Simulate mouse.down() & mouse.up()";
-        });
-        document.getElementById("mouseWheelBtn").addEventListener("click", () => {
-          mouseOutput.textContent = "Simulate mouse.wheel(0,200)";
-        });
+        mouseBox.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          let shiftX = e.clientX - mouseBox.getBoundingClientRect().left;
+          let shiftY = e.clientY - mouseBox.getBoundingClientRect().top;
+          mouseBox.style.position = "absolute";
+          mouseBox.style.zIndex = 1000;
+          document.body.appendChild(mouseBox);
 
-        /* Drag & Drop */
+          function moveAt(pageX, pageY) {
+            mouseBox.style.left = pageX - shiftX + "px";
+            mouseBox.style.top = pageY - shiftY + "px";
+          }
+          moveAt(e.pageX, e.pageY);
+
+          function onMouseMove(e) {
+            moveAt(e.pageX, e.pageY);
+          }
+          document.addEventListener("mousemove", onMouseMove);
+
+          mouseBox.addEventListener(
+            "mouseup",
+            () => {
+              document.removeEventListener("mousemove", onMouseMove);
+              const dropRect = dropZone.getBoundingClientRect();
+              const boxRect = mouseBox.getBoundingClientRect();
+              const isDroppedInside =
+                boxRect.left + boxRect.width / 2 > dropRect.left &&
+                boxRect.left + boxRect.width / 2 < dropRect.right &&
+                boxRect.top + boxRect.height / 2 > dropRect.top &&
+                boxRect.top + boxRect.height / 2 < dropRect.bottom;
+
+              mouseOutput.textContent = isDroppedInside
+                ? "Mouse action: Drag & Drop successful!"
+                : "Mouse action: Drag & Drop failed";
+
+              mouseBox.style.position = "";
+              mouseBox.style.left = "";
+              mouseBox.style.top = "";
+              mouseBox.style.zIndex = "";
+            },
+            { once: true }
+          );
+        });
+        mouseBox.ondragstart = () => false;
+
+        // Drag & Drop Section
         const dragItem = document.getElementById("dragItem");
         const dropArea = document.getElementById("dropArea");
         const dragOutput = document.getElementById("dragOutput");
-
         dragItem.addEventListener("mousedown", (e) => {
           e.preventDefault();
           let shiftX = e.clientX - dragItem.getBoundingClientRect().left;
           let shiftY = e.clientY - dragItem.getBoundingClientRect().top;
-
           dragItem.style.position = "absolute";
           dragItem.style.zIndex = 1000;
           document.body.appendChild(dragItem);
@@ -585,17 +610,16 @@
             () => {
               document.removeEventListener("mousemove", onMouseMove);
               const dropRect = dropArea.getBoundingClientRect();
-              const dragRect = dragItem.getBoundingClientRect();
+              const boxRect = dragItem.getBoundingClientRect();
               const isDroppedInside =
-                dragRect.left + dragRect.width / 2 > dropRect.left &&
-                dragRect.left + dragRect.width / 2 < dropRect.right &&
-                dragRect.top + dragRect.height / 2 > dropRect.top &&
-                dragRect.top + dragRect.height / 2 < dropRect.bottom;
+                boxRect.left + boxRect.width / 2 > dropRect.left &&
+                boxRect.left + boxRect.width / 2 < dropRect.right &&
+                boxRect.top + boxRect.height / 2 > dropRect.top &&
+                boxRect.top + boxRect.height / 2 < dropRect.bottom;
 
               dragOutput.textContent = isDroppedInside
                 ? "Drag & Drop successful!"
-                : "Drag & Drop failed: outside drop zone";
-
+                : "Drag & Drop failed";
               dragItem.style.position = "";
               dragItem.style.left = "";
               dragItem.style.top = "";
@@ -606,7 +630,7 @@
         });
         dragItem.ondragstart = () => false;
 
-        /* Keyboard Actions */
+        // Keyboard Actions
         const keyboardInput = document.getElementById("keyboardInput");
         const keyboardOutput = document.getElementById("keyboardOutput");
         keyboardInput.addEventListener("keydown", (e) => {
