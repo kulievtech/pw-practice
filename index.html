@@ -23,6 +23,7 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       }
       input,
+      select,
       button {
         display: block;
         margin: 10px 0;
@@ -50,15 +51,15 @@
     </style>
   </head>
   <body>
-    <h2>Login Form</h2>
-    <form>
-      <label for="username">Username</label>
-      <input id="username" type="text" aria-label="Username" placeholder="Username" />
-
-      <label for="password">Password</label>
-      <input id="password" type="password" aria-label="Password" placeholder="Password" />
-
-      <button type="submit">Login</button>
+    <h2>Login Form (Practice)</h2>
+    <form id="loginForm">
+      <input id="username" class="input-field" type="text" placeholder="Username" />
+      <input class="input-field" type="password" placeholder="Password" />
+      <select id="country">
+        <option value="USA">USA</option>
+        <option value="Canada">Canada</option>
+      </select>
+      <button id="loginBtn" type="submit">Login</button>
     </form>
 
     <h2>Buttons and Text</h2>
