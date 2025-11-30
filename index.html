@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Playwright Practice Playground</title>
+    <title>Playwright Interactive Practice</title>
     <style>
       * {
         box-sizing: border-box;
@@ -18,7 +18,7 @@
       }
       .container {
         width: 100%;
-        max-width: 700px;
+        max-width: 800px;
       }
       h2 {
         color: #5a2d82;
@@ -76,7 +76,6 @@
       button:hover {
         background: #5a2d82;
       }
-      /* Checkbox & Radio */
       .checkbox-group label,
       .radio-group label {
         display: block;
@@ -89,7 +88,6 @@
         margin-right: 8px;
         vertical-align: middle;
       }
-      /* Toggle */
       .toggle-switch {
         position: relative;
         display: inline-block;
@@ -130,7 +128,6 @@
       input:checked + .slider:before {
         transform: translateX(24px);
       }
-      /* Product List */
       .product-list {
         list-style: none;
         padding: 0;
@@ -151,15 +148,58 @@
         color: white;
         border-color: #5a2d82;
       }
-      .add {
-        margin-top: 15px;
+      .menu {
+        position: relative;
+        display: inline-block;
+        margin: 10px 0;
+      }
+      .submenu {
+        display: none;
+        position: absolute;
+        background: #764ba2;
+        color: white;
+        padding: 10px;
+        border-radius: 6px;
+        top: 100%;
+        left: 0;
+      }
+      .menu:hover .submenu {
+        display: block;
+      }
+      .draggable,
+      .dropzone {
+        width: 60px;
+        height: 60px;
+        margin: 10px 0;
+        display: inline-block;
+        text-align: center;
+        line-height: 60px;
+        color: white;
+        border-radius: 6px;
+        cursor: grab;
+      }
+      .draggable {
+        background: #e74c3c;
+      }
+      .dropzone {
+        background: #f1c40f;
+      }
+      .mouse-box {
+        width: 100px;
+        height: 100px;
+        background: #3498db;
+        color: white;
+        line-height: 100px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 10px;
       }
       .output {
         margin-top: 10px;
         font-weight: bold;
         color: #333;
       }
-      @media (max-width: 700px) {
+      @media (max-width: 800px) {
         form,
         .section {
           padding: 20px;
@@ -174,6 +214,7 @@
       <form id="loginForm">
         <input id="username" type="text" placeholder="Username" />
         <input type="password" id="password" placeholder="Password" />
+        <input type="checkbox" id="rememberMe" /> Remember Me
         <select id="country">
           <option value="USA">USA</option>
           <option value="Canada">Canada</option>
@@ -184,13 +225,23 @@
         <div class="output" id="loginMessage"></div>
       </form>
 
-      <!-- Buttons & Text -->
-      <h2>Buttons & Text</h2>
+      <!-- Buttons Section -->
+      <h2>Buttons</h2>
       <div class="section">
-        <button id="btnWelcome">Welcome</button>
-        <button id="btnClickMe">Click Me</button>
-        <p>Playwright is awesome for testing web apps!</p>
+        <button id="btnClick">Click Me</button>
+        <button id="btnDoubleClick">Double Click Me</button>
+        <button id="btnRightClick">Right Click Me</button>
         <div class="output" id="buttonOutput"></div>
+      </div>
+
+      <!-- Text Section -->
+      <h2>Text Section</h2>
+      <div class="section">
+        <p id="textParagraph">
+          This is a sample text. Click the button below to change it.
+        </p>
+        <button id="changeTextBtn">Change Text</button>
+        <div class="output" id="textOutput"></div>
       </div>
 
       <!-- Form with Labels -->
@@ -220,19 +271,21 @@
         <div class="output" id="searchOutput"></div>
       </div>
 
-      <!-- Checkboxes & Radios -->
-      <h2>Checkboxes & Radio Buttons</h2>
-      <div class="section">
-        <div class="checkbox-group">
-          <label><input type="checkbox" value="Option 1" /> Option 1</label>
-          <label><input type="checkbox" value="Option 2" /> Option 2</label>
-          <label><input type="checkbox" value="Option 3" /> Option 3</label>
-        </div>
-        <div class="radio-group">
-          <label><input type="radio" name="choice" value="A" /> Choice A</label>
-          <label><input type="radio" name="choice" value="B" /> Choice B</label>
-        </div>
-        <div class="output" id="checkboxRadioOutput"></div>
+      <!-- Checkboxes Section -->
+      <h2>Checkboxes</h2>
+      <div class="section checkbox-group">
+        <label><input type="checkbox" value="Option 1" /> Option 1</label>
+        <label><input type="checkbox" value="Option 2" /> Option 2</label>
+        <label><input type="checkbox" value="Option 3" /> Option 3</label>
+        <div class="output" id="checkboxOutput"></div>
+      </div>
+
+      <!-- Radio Buttons Section -->
+      <h2>Radio Buttons</h2>
+      <div class="section radio-group">
+        <label><input type="radio" name="choice" value="A" /> Choice A</label>
+        <label><input type="radio" name="choice" value="B" /> Choice B</label>
+        <div class="output" id="radioOutput"></div>
       </div>
 
       <!-- Toggle Switch -->
@@ -272,6 +325,40 @@
         </ul>
         <div class="output" id="selectedProducts"></div>
       </div>
+
+      <!-- Hover Menu -->
+      <h2>Hover Menu</h2>
+      <div class="section">
+        <div class="menu">
+          Hover Me
+          <div class="submenu">Submenu Item</div>
+        </div>
+        <div class="output" id="hoverOutput">Hover to see submenu</div>
+      </div>
+
+      <!-- Drag & Drop -->
+      <h2>Drag & Drop</h2>
+      <div class="section">
+        <div class="draggable" id="dragItem" draggable="true">Drag Me</div>
+        <div class="dropzone" id="dropArea">Drop Here</div>
+        <div class="output" id="dragOutput"></div>
+      </div>
+
+      <!-- Mouse Actions -->
+      <h2>Mouse Actions</h2>
+      <div class="section">
+        <div class="mouse-box" id="mouseBox">Hover or Click</div>
+        <button id="mouseClickBtn">Click Me</button>
+        <div class="output" id="mouseOutput">No action yet</div>
+      </div>
+
+      <!-- Keyboard Actions -->
+      <h2>Keyboard Actions</h2>
+      <div class="section">
+        <input type="text" id="keyboardInput" placeholder="Type something..." />
+        <button id="keyboardShiftBtn">Shift + Type</button>
+        <div class="output" id="keyboardOutput">Typed text will appear here</div>
+      </div>
     </div>
 
     <script>
@@ -283,26 +370,42 @@
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
         const country = document.getElementById("country").value;
+        const remember = document.getElementById("rememberMe").checked;
         loginMessage.textContent =
           username && password
-            ? `Logged in as ${username} from ${country}`
+            ? `Logged in as ${username} from ${country} ${
+                remember ? "(Remember Me checked)" : ""
+              }`
             : "Please enter username and password";
       });
 
-      // Buttons & Text
+      // Buttons
       const btnOutput = document.getElementById("buttonOutput");
       document
-        .getElementById("btnWelcome")
+        .getElementById("btnClick")
         .addEventListener(
           "click",
-          () => (btnOutput.textContent = "Welcome button clicked")
+          () => (btnOutput.textContent = "Click button clicked")
         );
       document
-        .getElementById("btnClickMe")
+        .getElementById("btnDoubleClick")
         .addEventListener(
-          "click",
-          () => (btnOutput.textContent = "Click Me button clicked")
+          "dblclick",
+          () => (btnOutput.textContent = "Double click detected")
         );
+      document.getElementById("btnRightClick").addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        btnOutput.textContent = "Right click detected";
+      });
+
+      // Text Section
+      const textParagraph = document.getElementById("textParagraph");
+      const changeTextBtn = document.getElementById("changeTextBtn");
+      const textOutput = document.getElementById("textOutput");
+      changeTextBtn.addEventListener("click", () => {
+        textParagraph.textContent = "The text has been updated!";
+        textOutput.textContent = "Text changed successfully.";
+      });
 
       // Form with Labels
       const labelForm = document.getElementById("labelForm");
@@ -317,7 +420,7 @@
             : "Please fill both fields";
       });
 
-      // Search Box with dynamic options
+      // Search Box
       const searchBox = document.getElementById("searchBox");
       const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
       const searchOutput = document.getElementById("searchOutput");
@@ -327,25 +430,34 @@
           (li) =>
             (li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none")
         );
-        searchOutput.textContent = term ? `Filtering options for: ${term}` : "";
+        searchOutput.textContent = term ? `Filtering for: ${term}` : "";
       });
 
-      // Checkbox & Radio
-      const checkboxRadioOutput = document.getElementById("checkboxRadioOutput");
-      const updateCheckboxRadioOutput = () => {
-        const checkedBoxes = Array.from(
-          document.querySelectorAll(".checkbox-group input:checked")
-        ).map((i) => i.value);
-        const checkedRadio = document.querySelector(".radio-group input:checked");
-        checkboxRadioOutput.textContent = `Checked boxes: ${
-          checkedBoxes.join(", ") || "None"
-        }, Selected radio: ${checkedRadio ? checkedRadio.value : "None"}`;
-      };
-      document
-        .querySelectorAll(".checkbox-group input, .radio-group input")
-        .forEach((i) => i.addEventListener("change", updateCheckboxRadioOutput));
+      // Checkboxes
+      const checkboxOutput = document.getElementById("checkboxOutput");
+      const checkboxes = document.querySelectorAll(".checkbox-group input");
+      checkboxes.forEach((c) =>
+        c.addEventListener("change", () => {
+          const selected = Array.from(checkboxes)
+            .filter((c) => c.checked)
+            .map((c) => c.value);
+          checkboxOutput.textContent = `Checked: ${
+            selected.length ? selected.join(", ") : "None"
+          }`;
+        })
+      );
 
-      // Toggle switch
+      // Radio Buttons
+      const radioOutput = document.getElementById("radioOutput");
+      const radios = document.querySelectorAll(".radio-group input");
+      radios.forEach((r) =>
+        r.addEventListener("change", () => {
+          const selected = Array.from(radios).find((r) => r.checked);
+          radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
+        })
+      );
+
+      // Toggle Switch
       const toggleSwitch = document.getElementById("toggleSwitch");
       const toggleOutput = document.getElementById("toggleOutput");
       toggleSwitch.addEventListener(
@@ -370,7 +482,7 @@
         () => (testIdOutput.textContent = "Data-testid button clicked")
       );
 
-      // Product list selection
+      // Product list
       const products = document.querySelectorAll(".product-item");
       const selectedProducts = document.getElementById("selectedProducts");
       products.forEach((item) =>
@@ -384,8 +496,6 @@
             : "No products selected";
         })
       );
-
-      // Product filter
       const productSearch = document.getElementById("productSearch");
       productSearch.addEventListener("input", () => {
         const term = productSearch.value.toLowerCase();
@@ -393,6 +503,74 @@
           (p) =>
             (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
         );
+      });
+
+      // Hover menu
+      const hoverOutput = document.getElementById("hoverOutput");
+      document
+        .querySelector(".menu")
+        .addEventListener(
+          "mouseenter",
+          () => (hoverOutput.textContent = "Submenu visible")
+        );
+      document
+        .querySelector(".menu")
+        .addEventListener(
+          "mouseleave",
+          () => (hoverOutput.textContent = "Hover to see submenu")
+        );
+
+      // Drag & Drop
+      const dragItem = document.getElementById("dragItem");
+      const dropArea = document.getElementById("dropArea");
+      const dragOutput = document.getElementById("dragOutput");
+      dragItem.addEventListener("dragstart", (e) =>
+        e.dataTransfer.setData("text/plain", dragItem.textContent)
+      );
+      dropArea.addEventListener("dragover", (e) => e.preventDefault());
+      dropArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const data = e.dataTransfer.getData("text/plain");
+        dragOutput.textContent = `${data} dropped into the drop zone`;
+      });
+
+      // Mouse Actions
+      const mouseBox = document.getElementById("mouseBox");
+      const mouseClickBtn = document.getElementById("mouseClickBtn");
+      const mouseOutput = document.getElementById("mouseOutput");
+      mouseBox.addEventListener(
+        "mouseenter",
+        () => (mouseOutput.textContent = "Mouse hovered over box")
+      );
+      mouseBox.addEventListener(
+        "mouseleave",
+        () => (mouseOutput.textContent = "Mouse left the box")
+      );
+      mouseClickBtn.addEventListener(
+        "click",
+        () => (mouseOutput.textContent = "Mouse button clicked")
+      );
+      mouseBox.addEventListener(
+        "dblclick",
+        () => (mouseOutput.textContent = "Mouse double-clicked")
+      );
+      mouseBox.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        mouseOutput.textContent = "Right click detected";
+      });
+
+      // Keyboard Actions
+      const keyboardInput = document.getElementById("keyboardInput");
+      const keyboardShiftBtn = document.getElementById("keyboardShiftBtn");
+      const keyboardOutput = document.getElementById("keyboardOutput");
+      keyboardInput.addEventListener(
+        "input",
+        () => (keyboardOutput.textContent = `Typed text: ${keyboardInput.value}`)
+      );
+      keyboardShiftBtn.addEventListener("click", () => {
+        const text = keyboardInput.value.toUpperCase();
+        keyboardInput.value = text;
+        keyboardOutput.textContent = `Shift typed: ${text}`;
       });
     </script>
   </body>
