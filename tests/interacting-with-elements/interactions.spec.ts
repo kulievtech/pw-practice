@@ -171,6 +171,13 @@ test("Waiting for Elements", async ({ page }) => {
 
   // 3. Hard wait (not recommended)
   // Example: Waiting 2 seconds before clicking next (sometimes used if animation is not easily detectable)
-  await page.waitForTimeout(2000);
-  await page.click("#nextStepButton");
+  const nextStepButton = page.locator("#nextStepButton");
+  const textBefore = await nextStepButton.textContent();
+  console.log("Button text before wait:", textBefore);
+
+  await nextStepButton.click();
+  await page.waitForTimeout(2000); // hard wait for 2 seconds
+
+  const textAfter = await nextStepButton.textContent();
+  console.log("Button text after click:", textAfter);
 });
