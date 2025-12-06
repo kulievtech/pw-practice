@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-test("Clicking & Tapping", async ({ page }) => {
+test("Clicking", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Single Click
@@ -61,6 +61,25 @@ test("Dropdowns", async ({ page }) => {
   await page.waitForTimeout(2000);
 });
 
+test("Hover Action", async ({ page }) => {
+  await page.goto("https://selectors-practice.onrender.com/");
+
+  // Scroll to Hover section
+  await page.locator("//h2[text()='Hover Menu']").scrollIntoViewIfNeeded();
+
+  // Hover over the element
+  await page.hover("div.menu");
+
+  // Wait for 2 seconds to observe the change
+  await page.waitForTimeout(2000);
+
+  // Click on the revealed submenu item
+  await page.click("#submenuItem");
+
+  // Move mouse away to hide submenu
+  await page.mouse.move(0, 0);
+});
+
 test("Mouse Actions - Drag and Drop", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
@@ -94,6 +113,24 @@ test("Mouse Actions - Drag and Drop", async ({ page }) => {
   await page.waitForTimeout(2000);
 });
 
+test("Drag & Drop", async ({ page }) => {
+  await page.goto("https://selectors-practice.onrender.com/");
+
+  // Scroll to Drag and Drop section
+  await page.locator("//h2[text()='Todo Drag & Drop']").scrollIntoViewIfNeeded();
+
+  // Get locators
+  const finishReportTodo = page.locator("//li[text()='Finish report']");
+  const doneZone = page.locator("#doneList");
+
+  // Drag and Drop using dragTo
+  await finishReportTodo.dragTo(doneZone);
+  await page.waitForTimeout(1000);
+
+  // Drag and Drop using dragAndDrop
+  await page.dragAndDrop("//li[text()='Buy groceries']", "#doneList");
+});
+
 test("Keyboard Actions", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
@@ -115,42 +152,3 @@ test("Keyboard Actions", async ({ page }) => {
     await page.waitForTimeout(100);
   }
 });
-
-test("Hover Action", async ({ page }) => {
-  await page.goto("https://selectors-practice.onrender.com/");
-
-  // Scroll to Hover section
-  await page.locator("//h2[text()='Hover Menu']").scrollIntoViewIfNeeded();
-
-  // Hover over the element
-  await page.hover("div.menu");
-
-  // Wait for 2 seconds to observe the change
-  await page.waitForTimeout(2000);
-
-  // Click on the revealed submenu item
-  await page.click("#submenuItem");
-
-  // Move mouse away to hide submenu
-  await page.mouse.move(0, 0);
-});
-
-test("Drag & Drop", async ({ page }) => {
-  await page.goto("https://selectors-practice.onrender.com/");
-
-  // Scroll to Drag and Drop section
-  await page.locator("//h2[text()='Todo Drag & Drop']").scrollIntoViewIfNeeded();
-
-  // Get locators
-  const finishReportTodo = page.locator("//li[text()='Finish report']");
-  const doneZone = page.locator("#doneList");
-
-  // Drag and Drop using dragTo
-  await finishReportTodo.dragTo(doneZone);
-  await page.waitForTimeout(1000);
-
-  // Drag and Drop using dragAndDrop
-  await page.dragAndDrop("//li[text()='Buy groceries']", "#doneList");
-});
-
-// File Upload
