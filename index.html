@@ -168,37 +168,6 @@
       .menu:hover .submenu {
         display: block;
       }
-      .draggable,
-      .dropzone,
-      .mouse-box {
-        display: inline-block;
-        text-align: center;
-        line-height: 60px;
-        border-radius: 8px;
-        cursor: grab;
-        user-select: none;
-        margin: 5px;
-      }
-      .draggable {
-        width: 60px;
-        height: 60px;
-        background: #e74c3c;
-        color: white;
-      }
-      .dropzone {
-        width: 100px;
-        height: 100px;
-        background: #f1c40f;
-        color: #333;
-        line-height: 100px;
-      }
-      .mouse-box {
-        width: 60px;
-        height: 60px;
-        background: #3498db;
-        color: white;
-        line-height: 60px;
-      }
       .output {
         margin-top: 10px;
         font-weight: bold;
@@ -211,6 +180,55 @@
       #searchOptions li:hover {
         background: #764ba2;
         color: white;
+      }
+      .drag-list {
+        list-style: none;
+        padding: 10px;
+        min-height: 200px;
+        background: #f1f1f1;
+        border-radius: 10px;
+        border: 2px dashed #ccc;
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .drag-item {
+        padding: 12px;
+        margin: 6px 0;
+        background: #764ba2;
+        color: white;
+        border-radius: 8px;
+        cursor: grab;
+        user-select: none;
+        transition: 0.2s;
+      }
+      .drag-item.dragging {
+        opacity: 0.5;
+      }
+      .drag-list.over {
+        border-color: #5a2d82;
+        background: #e6d6f2;
+      }
+      .mouse-box,
+      .dropzone {
+        display: inline-block;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 8px;
+        cursor: grab;
+        user-select: none;
+        margin: 5px;
+      }
+      .mouse-box {
+        width: 60px;
+        height: 60px;
+        background: #3498db;
+        color: white;
+      }
+      .dropzone {
+        width: 100px;
+        height: 100px;
+        background: #f1c40f;
+        color: #333;
+        line-height: 100px;
       }
       @media (max-width: 900px) {
         form,
@@ -370,25 +388,48 @@
         </div>
       </div>
 
-      <!-- Mouse Actions -->
+      <!-- Mouse Actions Section -->
       <h2>Mouse Actions</h2>
       <div class="section">
         <p>Drag the box into the drop zone using mouse or Playwright mouse actions:</p>
-        <div style="display: flex; gap: 10px; align-items: center">
-          <div id="mouseBox" class="mouse-box">Drag Me</div>
-          <div id="dropZone" class="dropzone">Drop Here</div>
+        <div style="position: relative; height: 150px">
+          <div
+            id="mouseBox"
+            class="mouse-box"
+            style="position: absolute; left: 0; top: 0"
+          >
+            Drag Me
+          </div>
+          <div
+            id="dropZone"
+            class="dropzone"
+            style="position: absolute; right: 0; top: 0"
+          >
+            Drop Here
+          </div>
         </div>
         <div class="output" id="mouseOutput">
           Drag the box into drop zone to see action.
         </div>
       </div>
 
-      <!-- Drag & Drop -->
-      <h2>Drag & Drop</h2>
-      <div class="section">
-        <div id="dragItem" class="draggable">Drag Me</div>
-        <div id="dropArea" class="dropzone">Drop Here</div>
-        <div class="output" id="dragOutput"></div>
+      <!-- Todo Drag & Drop Section -->
+      <h2>Todo Drag & Drop</h2>
+      <div class="section" id="todoSection">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap">
+          <div style="flex: 1; min-width: 200px">
+            <h3>Todo</h3>
+            <ul id="todoList" class="drag-list">
+              <li class="drag-item" draggable="true">Buy groceries</li>
+              <li class="drag-item" draggable="true">Clean the house</li>
+              <li class="drag-item" draggable="true">Finish report</li>
+            </ul>
+          </div>
+          <div style="flex: 1; min-width: 200px">
+            <h3>Done</h3>
+            <ul id="doneList" class="drag-list"></ul>
+          </div>
+        </div>
       </div>
 
       <!-- Keyboard Actions -->
@@ -564,63 +605,92 @@
         keyboardOutput.textContent = keyboardInput.value;
       });
 
-      // DRAG & DROP FUNCTIONALITY
-      function makeDraggable(draggable, dropzone, output, successText) {
-        let shiftX, shiftY;
-        draggable.addEventListener("mousedown", (e) => {
-          e.preventDefault();
-          shiftX = e.clientX - draggable.getBoundingClientRect().left;
-          shiftY = e.clientY - draggable.getBoundingClientRect().top;
+      // Mouse Actions Drag
+      const mouseBox = document.getElementById("mouseBox");
+      const dropZone = document.getElementById("dropZone");
+      const mouseOutput = document.getElementById("mouseOutput");
 
-          let currentX = 0;
-          let currentY = 0;
+      mouseBox.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        const offsetX = e.clientX - mouseBox.getBoundingClientRect().left;
+        const offsetY = e.clientY - mouseBox.getBoundingClientRect().top;
 
-          function moveAt(pageX, pageY) {
-            currentX = pageX - shiftX - draggable.offsetLeft;
-            currentY = pageY - shiftY - draggable.offsetTop;
-            draggable.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        function mouseMoveHandler(e) {
+          mouseBox.style.left =
+            e.clientX -
+            offsetX -
+            mouseBox.parentElement.getBoundingClientRect().left +
+            "px";
+          mouseBox.style.top =
+            e.clientY -
+            offsetY -
+            mouseBox.parentElement.getBoundingClientRect().top +
+            "px";
+        }
+
+        function mouseUpHandler() {
+          const boxRect = mouseBox.getBoundingClientRect();
+          const zoneRect = dropZone.getBoundingClientRect();
+
+          if (
+            boxRect.left + boxRect.width / 2 > zoneRect.left &&
+            boxRect.left + boxRect.width / 2 < zoneRect.right &&
+            boxRect.top + boxRect.height / 2 > zoneRect.top &&
+            boxRect.top + boxRect.height / 2 < zoneRect.bottom
+          ) {
+            mouseOutput.textContent = "Mouse action: Drag & Drop successful!";
+          } else {
+            mouseOutput.textContent = "Drag & Drop failed";
+            mouseBox.style.left = "0px";
+            mouseBox.style.top = "0px";
           }
 
-          function onMouseMove(e) {
-            moveAt(e.pageX, e.pageY);
-          }
-          document.addEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mousemove", mouseMoveHandler);
+          document.removeEventListener("mouseup", mouseUpHandler);
+        }
 
-          draggable.addEventListener(
-            "mouseup",
-            () => {
-              document.removeEventListener("mousemove", onMouseMove);
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
+      });
 
-              const dropRect = dropzone.getBoundingClientRect();
-              const dragRect = draggable.getBoundingClientRect();
-              const isDroppedInside =
-                dragRect.left + dragRect.width / 2 > dropRect.left &&
-                dragRect.left + dragRect.width / 2 < dropRect.right &&
-                dragRect.top + dragRect.height / 2 > dropRect.top &&
-                dragRect.top + dragRect.height / 2 < dropRect.bottom;
+      // Todo Drag & Drop
+      const dragItems = document.querySelectorAll(".drag-item");
+      const todoList = document.getElementById("todoList");
+      const doneList = document.getElementById("doneList");
+      let draggedItem = null;
 
-              output.textContent = isDroppedInside ? successText : "Drag & Drop failed";
-
-              draggable.style.transform = "";
-            },
-            { once: true }
-          );
+      dragItems.forEach((item) => {
+        item.addEventListener("dragstart", () => {
+          draggedItem = item;
+          item.classList.add("dragging");
         });
-        draggable.ondragstart = () => false;
+        item.addEventListener("dragend", () => {
+          draggedItem = null;
+          item.classList.remove("dragging");
+        });
+      });
+
+      function dragOverHandler(e) {
+        e.preventDefault();
+        this.classList.add("over");
       }
 
-      makeDraggable(
-        document.getElementById("mouseBox"),
-        document.getElementById("dropZone"),
-        document.getElementById("mouseOutput"),
-        "Mouse action: Drag & Drop successful!"
-      );
-      makeDraggable(
-        document.getElementById("dragItem"),
-        document.getElementById("dropArea"),
-        document.getElementById("dragOutput"),
-        "Drag & Drop successful!"
-      );
+      function dragLeaveHandler() {
+        this.classList.remove("over");
+      }
+
+      function dropHandler() {
+        this.classList.remove("over");
+        if (draggedItem) {
+          this.appendChild(draggedItem);
+        }
+      }
+
+      [todoList, doneList].forEach((list) => {
+        list.addEventListener("dragover", dragOverHandler);
+        list.addEventListener("dragleave", dragLeaveHandler);
+        list.addEventListener("drop", dropHandler);
+      });
     </script>
   </body>
 </html>
