@@ -297,6 +297,19 @@
         <div class="output" id="radioOutput"></div>
       </div>
 
+      <!-- Dropdown Section -->
+      <h2>Dropdown</h2>
+      <div class="section">
+        <select id="dropdownMenu">
+          <option value="">Choose your favorite color</option>
+          <option value="Red">Red</option>
+          <option value="Green">Green</option>
+          <option value="Blue">Blue</option>
+          <option value="Yellow">Yellow</option>
+        </select>
+        <div class="output" id="dropdownOutput"></div>
+      </div>
+
       <!-- Toggle Switch -->
       <h2>Toggle Switch</h2>
       <div class="section">
@@ -474,6 +487,16 @@
             radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
           })
         );
+
+        // Dropdown Section
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        const dropdownOutput = document.getElementById("dropdownOutput");
+
+        dropdownMenu.addEventListener("change", () => {
+          dropdownOutput.textContent = dropdownMenu.value
+            ? `Selected: ${dropdownMenu.value}`
+            : "No option selected";
+        });
 
         // Toggle Switch
         const toggleSwitch = document.getElementById("toggleSwitch");
