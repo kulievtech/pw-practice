@@ -98,10 +98,11 @@ test("Keyboard Actions", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Focus on input field
-  await page.click("#username");
+  await page.click("#keyboardInput");
 
   // Type text using keyboard
-  await page.keyboard.type("HelloWorld", { delay: 100 });
+  const text = "Hello World from Keyboard!";
+  await page.keyboard.type("Hello World from Keyboard", { delay: 100 });
   await page.waitForTimeout(2000);
 
   // Press Enter key
@@ -109,15 +110,36 @@ test("Keyboard Actions", async ({ page }) => {
   await page.waitForTimeout(2000);
 
   // Press Backspace key
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < text.length; i++) {
     await page.keyboard.press("Backspace");
-    await page.waitForTimeout(200);
+    await page.waitForTimeout(100);
   }
-  await page.waitForTimeout(2000);
 });
 
-// Slider
+test("Hover Action", async ({ page }) => {
+  await page.goto("https://selectors-practice.onrender.com/");
 
-// Drag and Drop
+  // Scroll to Hover section
+  await page.locator("//h2[text()='Hover Menu']").scrollIntoViewIfNeeded();
+
+  // Hover over the element
+  await page.hover("div.menu");
+
+  // Click on the revealed submenu item
+  await page.click("#submenuItem");
+
+  // Move mouse away (to top-left corner)
+  await page.mouse.move(0, 0);
+});
+
+test("Drag & Drop", async ({ page }) => {
+  await page.goto("https://selectors-practice.onrender.com/");
+
+  // Scroll to Drag and Drop section
+  await page.locator("//h2[text()='Drag & Drop']").scrollIntoViewIfNeeded();
+
+  // Perform Drag and Drop
+  await page.dragAndDrop("#dragItem", "#dropArea");
+});
 
 // File Upload
