@@ -397,275 +397,230 @@
         <input type="text" id="keyboardInput" placeholder="Type something..." />
         <div class="output" id="keyboardOutput">Typed text will appear here</div>
       </div>
-
-      <script>
-        /* JavaScript for all interactions */
-        // Login Form
-        const loginForm = document.getElementById("loginForm");
-        const loginMessage = document.getElementById("loginMessage");
-        loginForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
-          const country = document.getElementById("country").value;
-          const remember = document.getElementById("rememberMe").checked;
-          loginMessage.textContent =
-            username && password
-              ? `Logged in as ${username} from ${country} ${
-                  remember ? "(Remember Me checked)" : ""
-                }`
-              : "Please enter username and password";
-        });
-
-        // Buttons
-        const btnOutput = document.getElementById("buttonOutput");
-        document
-          .getElementById("btnClick")
-          .addEventListener(
-            "click",
-            () => (btnOutput.textContent = "Click button clicked")
-          );
-        document
-          .getElementById("btnDoubleClick")
-          .addEventListener(
-            "dblclick",
-            () => (btnOutput.textContent = "Double click detected")
-          );
-        document.getElementById("btnRightClick").addEventListener("contextmenu", (e) => {
-          e.preventDefault();
-          btnOutput.textContent = "Right click detected";
-        });
-
-        // Form with Labels
-        const labelForm = document.getElementById("labelForm");
-        const labelFormOutput = document.getElementById("labelFormOutput");
-        labelForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const email = document.getElementById("email").value;
-          const pass = document.getElementById("pass").value;
-          labelFormOutput.textContent =
-            email && pass
-              ? `Form submitted with email: ${email}`
-              : "Please fill both fields";
-        });
-
-        // Search Box
-        const searchBox = document.getElementById("searchBox");
-        const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
-        const searchOutput = document.getElementById("searchOutput");
-        searchBox.addEventListener("input", () => {
-          const term = searchBox.value.toLowerCase();
-          searchOptions.forEach(
-            (li) =>
-              (li.style.display = li.textContent.toLowerCase().includes(term)
-                ? ""
-                : "none")
-          );
-          searchOutput.textContent = term ? `Filtering for: ${term}` : "";
-        });
-
-        // Checkboxes
-        const checkboxOutput = document.getElementById("checkboxOutput");
-        const checkboxes = document.querySelectorAll(".checkbox-group input");
-        checkboxes.forEach((c) =>
-          c.addEventListener("change", () => {
-            const selected = Array.from(checkboxes)
-              .filter((c) => c.checked)
-              .map((c) => c.value);
-            checkboxOutput.textContent = `Checked: ${
-              selected.length ? selected.join(", ") : "None"
-            }`;
-          })
-        );
-
-        // Radio Buttons
-        const radioOutput = document.getElementById("radioOutput");
-        const radios = document.querySelectorAll(".radio-group input");
-        radios.forEach((r) =>
-          r.addEventListener("change", () => {
-            const selected = Array.from(radios).find((r) => r.checked);
-            radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
-          })
-        );
-
-        // Dropdown Section
-        const dropdownMenu = document.getElementById("dropdownMenu");
-        const dropdownOutput = document.getElementById("dropdownOutput");
-
-        dropdownMenu.addEventListener("change", () => {
-          dropdownOutput.textContent = dropdownMenu.value
-            ? `Selected: ${dropdownMenu.value}`
-            : "No option selected";
-        });
-
-        // Toggle Switch
-        const toggleSwitch = document.getElementById("toggleSwitch");
-        const toggleOutput = document.getElementById("toggleOutput");
-        toggleSwitch.addEventListener(
-          "change",
-          () =>
-            (toggleOutput.textContent = `Toggle is ${
-              toggleSwitch.checked ? "ON" : "OFF"
-            }`)
-        );
-
-        // Textarea
-        const textarea = document.getElementById("textArea");
-        const textareaOutput = document.getElementById("textareaOutput");
-        textarea.addEventListener(
-          "input",
-          () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
-        );
-
-        // Button with data-testid
-        const testIdButton = document.getElementById("testIdButton");
-        const testIdOutput = document.getElementById("testIdOutput");
-        testIdButton.addEventListener(
-          "click",
-          () => (testIdOutput.textContent = "Data-testid button clicked")
-        );
-
-        // Product List
-        const products = document.querySelectorAll(".product-item");
-        const selectedProducts = document.getElementById("selectedProducts");
-        products.forEach((item) =>
-          item.addEventListener("click", () => {
-            item.classList.toggle("selected");
-            const selected = Array.from(
-              document.querySelectorAll(".product-item.selected")
-            ).map((i) => i.textContent);
-            selectedProducts.textContent = selected.length
-              ? `Selected products: ${selected.join(", ")}`
-              : "No products selected";
-          })
-        );
-        const productSearch = document.getElementById("productSearch");
-        productSearch.addEventListener("input", () => {
-          const term = productSearch.value.toLowerCase();
-          products.forEach(
-            (p) =>
-              (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
-          );
-        });
-
-        // Hover Menu
-        const hoverOutput = document.getElementById("hoverOutput");
-        const submenuItem = document.getElementById("submenuItem");
-        submenuItem.addEventListener(
-          "click",
-          () => (hoverOutput.textContent = "Submenu clicked!")
-        );
-
-        // Mouse Actions (drag into drop zone)
-        const mouseBox = document.getElementById("mouseBox");
-        const dropZone = document.getElementById("dropZone");
-        const mouseOutput = document.getElementById("mouseOutput");
-        mouseBox.addEventListener("mousedown", (e) => {
-          e.preventDefault();
-          let shiftX = e.clientX - mouseBox.getBoundingClientRect().left;
-          let shiftY = e.clientY - mouseBox.getBoundingClientRect().top;
-          mouseBox.style.position = "absolute";
-          mouseBox.style.zIndex = 1000;
-          document.body.appendChild(mouseBox);
-
-          function moveAt(pageX, pageY) {
-            mouseBox.style.left = pageX - shiftX + "px";
-            mouseBox.style.top = pageY - shiftY + "px";
-          }
-          moveAt(e.pageX, e.pageY);
-
-          function onMouseMove(e) {
-            moveAt(e.pageX, e.pageY);
-          }
-          document.addEventListener("mousemove", onMouseMove);
-
-          mouseBox.addEventListener(
-            "mouseup",
-            () => {
-              document.removeEventListener("mousemove", onMouseMove);
-              const dropRect = dropZone.getBoundingClientRect();
-              const boxRect = mouseBox.getBoundingClientRect();
-              const isDroppedInside =
-                boxRect.left + boxRect.width / 2 > dropRect.left &&
-                boxRect.left + boxRect.width / 2 < dropRect.right &&
-                boxRect.top + boxRect.height / 2 > dropRect.top &&
-                boxRect.top + boxRect.height / 2 < dropRect.bottom;
-
-              mouseOutput.textContent = isDroppedInside
-                ? "Mouse action: Drag & Drop successful!"
-                : "Mouse action: Drag & Drop failed";
-
-              mouseBox.style.position = "";
-              mouseBox.style.left = "";
-              mouseBox.style.top = "";
-              mouseBox.style.zIndex = "";
-            },
-            { once: true }
-          );
-        });
-        mouseBox.ondragstart = () => false;
-
-        // Drag & Drop Section
-        const dragItem = document.getElementById("dragItem");
-        const dropArea = document.getElementById("dropArea");
-        const dragOutput = document.getElementById("dragOutput");
-        dragItem.addEventListener("mousedown", (e) => {
-          e.preventDefault();
-          let shiftX = e.clientX - dragItem.getBoundingClientRect().left;
-          let shiftY = e.clientY - dragItem.getBoundingClientRect().top;
-          dragItem.style.position = "absolute";
-          dragItem.style.zIndex = 1000;
-          document.body.appendChild(dragItem);
-
-          function moveAt(pageX, pageY) {
-            dragItem.style.left = pageX - shiftX + "px";
-            dragItem.style.top = pageY - shiftY + "px";
-          }
-          moveAt(e.pageX, e.pageY);
-
-          function onMouseMove(e) {
-            moveAt(e.pageX, e.pageY);
-          }
-          document.addEventListener("mousemove", onMouseMove);
-
-          dragItem.addEventListener(
-            "mouseup",
-            () => {
-              document.removeEventListener("mousemove", onMouseMove);
-              const dropRect = dropArea.getBoundingClientRect();
-              const boxRect = dragItem.getBoundingClientRect();
-              const isDroppedInside =
-                boxRect.left + boxRect.width / 2 > dropRect.left &&
-                boxRect.left + boxRect.width / 2 < dropRect.right &&
-                boxRect.top + boxRect.height / 2 > dropRect.top &&
-                boxRect.top + boxRect.height / 2 < dropRect.bottom;
-
-              dragOutput.textContent = isDroppedInside
-                ? "Drag & Drop successful!"
-                : "Drag & Drop failed";
-              dragItem.style.position = "";
-              dragItem.style.left = "";
-              dragItem.style.top = "";
-              dragItem.style.zIndex = "";
-            },
-            { once: true }
-          );
-        });
-        dragItem.ondragstart = () => false;
-
-        // Keyboard Actions
-        const keyboardInput = document.getElementById("keyboardInput");
-        const keyboardOutput = document.getElementById("keyboardOutput");
-        keyboardInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            keyboardOutput.textContent = `${keyboardInput.value} + Enter pressed`;
-            e.preventDefault();
-          }
-        });
-        keyboardInput.addEventListener("input", () => {
-          keyboardOutput.textContent = keyboardInput.value;
-        });
-      </script>
     </div>
+
+    <script>
+      // Login Form
+      const loginForm = document.getElementById("loginForm");
+      const loginMessage = document.getElementById("loginMessage");
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const country = document.getElementById("country").value;
+        const remember = document.getElementById("rememberMe").checked;
+        loginMessage.textContent =
+          username && password
+            ? `Logged in as ${username} from ${country} ${
+                remember ? "(Remember Me checked)" : ""
+              }`
+            : "Please enter username and password";
+      });
+
+      // Buttons
+      const btnOutput = document.getElementById("buttonOutput");
+      document
+        .getElementById("btnClick")
+        .addEventListener(
+          "click",
+          () => (btnOutput.textContent = "Click button clicked")
+        );
+      document
+        .getElementById("btnDoubleClick")
+        .addEventListener(
+          "dblclick",
+          () => (btnOutput.textContent = "Double click detected")
+        );
+      document.getElementById("btnRightClick").addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        btnOutput.textContent = "Right click detected";
+      });
+
+      // Form with Labels
+      const labelForm = document.getElementById("labelForm");
+      const labelFormOutput = document.getElementById("labelFormOutput");
+      labelForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const pass = document.getElementById("pass").value;
+        labelFormOutput.textContent =
+          email && pass
+            ? `Form submitted with email: ${email}`
+            : "Please fill both fields";
+      });
+
+      // Search Box
+      const searchBox = document.getElementById("searchBox");
+      const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
+      const searchOutput = document.getElementById("searchOutput");
+      searchBox.addEventListener("input", () => {
+        const term = searchBox.value.toLowerCase();
+        searchOptions.forEach(
+          (li) =>
+            (li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none")
+        );
+        searchOutput.textContent = term ? `Filtering for: ${term}` : "";
+      });
+
+      // Checkboxes
+      const checkboxOutput = document.getElementById("checkboxOutput");
+      const checkboxes = document.querySelectorAll(".checkbox-group input");
+      checkboxes.forEach((c) =>
+        c.addEventListener("change", () => {
+          const selected = Array.from(checkboxes)
+            .filter((c) => c.checked)
+            .map((c) => c.value);
+          checkboxOutput.textContent = `Checked: ${
+            selected.length ? selected.join(", ") : "None"
+          }`;
+        })
+      );
+
+      // Radio Buttons
+      const radioOutput = document.getElementById("radioOutput");
+      const radios = document.querySelectorAll(".radio-group input");
+      radios.forEach((r) =>
+        r.addEventListener("change", () => {
+          const selected = Array.from(radios).find((r) => r.checked);
+          radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
+        })
+      );
+
+      // Dropdown
+      const dropdownMenu = document.getElementById("dropdownMenu");
+      const dropdownOutput = document.getElementById("dropdownOutput");
+      dropdownMenu.addEventListener("change", () => {
+        dropdownOutput.textContent = dropdownMenu.value
+          ? `Selected: ${dropdownMenu.value}`
+          : "No option selected";
+      });
+
+      // Toggle Switch
+      const toggleSwitch = document.getElementById("toggleSwitch");
+      const toggleOutput = document.getElementById("toggleOutput");
+      toggleSwitch.addEventListener(
+        "change",
+        () =>
+          (toggleOutput.textContent = `Toggle is ${toggleSwitch.checked ? "ON" : "OFF"}`)
+      );
+
+      // Textarea
+      const textarea = document.getElementById("textArea");
+      const textareaOutput = document.getElementById("textareaOutput");
+      textarea.addEventListener(
+        "input",
+        () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
+      );
+
+      // Button with data-testid
+      const testIdButton = document.getElementById("testIdButton");
+      const testIdOutput = document.getElementById("testIdOutput");
+      testIdButton.addEventListener(
+        "click",
+        () => (testIdOutput.textContent = "Data-testid button clicked")
+      );
+
+      // Product List
+      const products = document.querySelectorAll(".product-item");
+      const selectedProducts = document.getElementById("selectedProducts");
+      products.forEach((item) =>
+        item.addEventListener("click", () => {
+          item.classList.toggle("selected");
+          const selected = Array.from(
+            document.querySelectorAll(".product-item.selected")
+          ).map((i) => i.textContent);
+          selectedProducts.textContent = selected.length
+            ? `Selected products: ${selected.join(", ")}`
+            : "No products selected";
+        })
+      );
+      const productSearch = document.getElementById("productSearch");
+      productSearch.addEventListener("input", () => {
+        const term = productSearch.value.toLowerCase();
+        products.forEach(
+          (p) =>
+            (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
+        );
+      });
+
+      // Hover Menu
+      const hoverOutput = document.getElementById("hoverOutput");
+      const submenuItem = document.getElementById("submenuItem");
+      submenuItem.addEventListener(
+        "click",
+        () => (hoverOutput.textContent = "Submenu clicked!")
+      );
+
+      // Keyboard Actions
+      const keyboardInput = document.getElementById("keyboardInput");
+      const keyboardOutput = document.getElementById("keyboardOutput");
+      keyboardInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          keyboardOutput.textContent = `${keyboardInput.value} + Enter pressed`;
+          e.preventDefault();
+        }
+      });
+      keyboardInput.addEventListener("input", () => {
+        keyboardOutput.textContent = keyboardInput.value;
+      });
+
+      // DRAG & DROP FUNCTIONALITY
+      function makeDraggable(draggable, dropzone, output, successText) {
+        let shiftX, shiftY;
+        draggable.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          shiftX = e.clientX - draggable.getBoundingClientRect().left;
+          shiftY = e.clientY - draggable.getBoundingClientRect().top;
+
+          let currentX = 0;
+          let currentY = 0;
+
+          function moveAt(pageX, pageY) {
+            currentX = pageX - shiftX - draggable.offsetLeft;
+            currentY = pageY - shiftY - draggable.offsetTop;
+            draggable.style.transform = `translate(${currentX}px, ${currentY}px)`;
+          }
+
+          function onMouseMove(e) {
+            moveAt(e.pageX, e.pageY);
+          }
+          document.addEventListener("mousemove", onMouseMove);
+
+          draggable.addEventListener(
+            "mouseup",
+            () => {
+              document.removeEventListener("mousemove", onMouseMove);
+
+              const dropRect = dropzone.getBoundingClientRect();
+              const dragRect = draggable.getBoundingClientRect();
+              const isDroppedInside =
+                dragRect.left + dragRect.width / 2 > dropRect.left &&
+                dragRect.left + dragRect.width / 2 < dropRect.right &&
+                dragRect.top + dragRect.height / 2 > dropRect.top &&
+                dragRect.top + dragRect.height / 2 < dropRect.bottom;
+
+              output.textContent = isDroppedInside ? successText : "Drag & Drop failed";
+
+              draggable.style.transform = "";
+            },
+            { once: true }
+          );
+        });
+        draggable.ondragstart = () => false;
+      }
+
+      makeDraggable(
+        document.getElementById("mouseBox"),
+        document.getElementById("dropZone"),
+        document.getElementById("mouseOutput"),
+        "Mouse action: Drag & Drop successful!"
+      );
+      makeDraggable(
+        document.getElementById("dragItem"),
+        document.getElementById("dropArea"),
+        document.getElementById("dragOutput"),
+        "Drag & Drop successful!"
+      );
+    </script>
   </body>
 </html>
