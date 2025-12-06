@@ -152,3 +152,25 @@ test("Keyboard Actions", async ({ page }) => {
     await page.waitForTimeout(100);
   }
 });
+
+test("Waiting for Elements", async ({ page }) => {
+  await page.goto("https://selectors-practice.onrender.com/");
+
+  // 1. Wait until element appears
+  // Example: Waiting for the welcome message to appear before interacting
+  await page.waitForSelector("#welcomeMessage");
+  const welcomeText = await page.textContent("#welcomeMessage");
+  console.log("Welcome message:", welcomeText);
+
+  // 2. Wait for a specific network state
+  // Example: Wait until network is idle after a button click triggers an API call
+  await page.click("#loadDataButton"); // assume this triggers network requests
+  await page.waitForLoadState("networkidle"); // waits until network requests are finished
+  const dataText = await page.textContent("#data");
+  console.log("Loaded data:", dataText);
+
+  // 3. Hard wait (not recommended)
+  // Example: Waiting 2 seconds before clicking next (sometimes used if animation is not easily detectable)
+  await page.waitForTimeout(2000);
+  await page.click("#nextStepButton");
+});

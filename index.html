@@ -438,6 +438,15 @@
         <input type="text" id="keyboardInput" placeholder="Type something..." />
         <div class="output" id="keyboardOutput">Typed text will appear here</div>
       </div>
+
+      <!-- Waiting for Elements Section -->
+      <h2>Waiting for Elements</h2>
+      <div class="section" id="waitingSection">
+        <p id="welcomeMessage" style="display: none">Welcome! Prepare to load data...</p>
+        <button id="loadDataButton">Load Data</button>
+        <div id="data" class="output"></div>
+        <button id="nextStepButton" style="margin-top: 10px">Next Step</button>
+      </div>
     </div>
 
     <script>
@@ -690,6 +699,26 @@
         list.addEventListener("dragover", dragOverHandler);
         list.addEventListener("dragleave", dragLeaveHandler);
         list.addEventListener("drop", dropHandler);
+      });
+
+      // WAITING FOR ELEMENTS
+      setTimeout(
+        () => (document.getElementById("welcomeMessage").style.display = "block"),
+        1000
+      );
+      document.getElementById("loadDataButton").addEventListener("click", () => {
+        const dataDiv = document.getElementById("data");
+        dataDiv.textContent = "Loading data...";
+        setTimeout(() => (dataDiv.textContent = "Data loaded successfully!"), 1500);
+      });
+      document.getElementById("nextStepButton").addEventListener("click", () => {
+        const btn = document.getElementById("nextStepButton");
+        btn.disabled = true;
+        btn.textContent = "Processing...";
+        setTimeout(() => {
+          btn.textContent = "Step Completed!";
+          btn.disabled = false;
+        }, 2000);
       });
     </script>
   </body>
