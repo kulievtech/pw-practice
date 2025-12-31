@@ -481,10 +481,12 @@
           "dblclick",
           () => (btnOutput.textContent = "Double click detected")
         );
-      document.getElementById("btnRightClick").addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        btnOutput.textContent = "Right click detected";
-      });
+      document
+        .getElementById("disabledButton")
+        .addEventListener(
+          "click",
+          () => (btnOutput.textContent = "Disabled button clicked")
+        );
 
       // Form with Labels
       const labelForm = document.getElementById("labelForm");
