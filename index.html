@@ -468,8 +468,8 @@
       <h2>File Upload & Download</h2>
       <div class="section">
         <!-- Upload -->
-        <p>Upload a file to see its name displayed below:</p>
-        <input type="file" id="fileUpload" />
+        <p>Upload one or more files to see their names displayed below:</p>
+        <input type="file" id="fileUpload" multiple />
         <div class="output" id="uploadOutput">No file selected</div>
 
         <!-- Download -->
@@ -804,10 +804,14 @@
       const uploadOutput = document.getElementById("uploadOutput");
 
       fileUpload.addEventListener("change", () => {
-        const file = fileUpload.files[0];
-        uploadOutput.textContent = file
-          ? `Selected file: ${file.name}`
-          : "No file selected";
+        const files = Array.from(fileUpload.files); // convert FileList to array
+        if (files.length === 0) {
+          uploadOutput.textContent = "No file selected";
+        } else {
+          // Display all selected file names
+          uploadOutput.textContent =
+            "Selected files: " + files.map((f) => f.name).join(", ");
+        }
       });
 
       // File Download
