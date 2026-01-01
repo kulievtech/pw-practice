@@ -236,6 +236,12 @@
           padding: 20px;
         }
       }
+      #openNewTabBtn {
+        background: #27ae60;
+      }
+      #openNewTabBtn:hover {
+        background: #1e8449;
+      }
     </style>
   </head>
   <body>
@@ -446,6 +452,15 @@
         <button id="loadDataButton">Load Data</button>
         <div id="data" class="output"></div>
         <button id="nextStepButton" style="margin-top: 10px">Next Step</button>
+      </div>
+      <!-- New Tab Practice -->
+      <h2>New Tab / Window</h2>
+      <div class="section">
+        <p>Click the button below to open a page in a new tab.</p>
+
+        <button id="openNewTabBtn">Open Page in New Tab</button>
+
+        <div class="output" id="newTabOutput"></div>
       </div>
     </div>
 
@@ -721,6 +736,52 @@
           btn.textContent = "Step Completed!";
           btn.disabled = false;
         }, 2000);
+      });
+
+      // New Tab / Window
+      const openNewTabBtn = document.getElementById("openNewTabBtn");
+      const newTabOutput = document.getElementById("newTabOutput");
+
+      openNewTabBtn.addEventListener("click", () => {
+        const newWindow = window.open("", "_blank");
+
+        newWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <title>New Tab Page</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+          .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            text-align: center;
+          }
+          h1 {
+            color: #764ba2;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h1 id="newTabTitle">Welcome to the New Tab</h1>
+          <p>This page was opened in a new tab.</p>
+        </div>
+      </body>
+    </html>
+  `);
+
+        newWindow.document.close();
+        newTabOutput.textContent = "New tab opened successfully";
       });
     </script>
   </body>
