@@ -453,6 +453,7 @@
         <div id="data" class="output"></div>
         <button id="nextStepButton" style="margin-top: 10px">Next Step</button>
       </div>
+
       <!-- New Tab Practice -->
       <h2>New Tab / Window</h2>
       <div class="section">
@@ -461,6 +462,20 @@
         <button id="openNewTabBtn">Open Page in New Tab</button>
 
         <div class="output" id="newTabOutput"></div>
+      </div>
+
+      <!-- File Upload & Download Section -->
+      <h2>File Upload & Download</h2>
+      <div class="section">
+        <!-- Upload -->
+        <p>Upload a file to see its name displayed below:</p>
+        <input type="file" id="fileUpload" />
+        <div class="output" id="uploadOutput">No file selected</div>
+
+        <!-- Download -->
+        <p style="margin-top: 20px">Click the button to download a sample file:</p>
+        <button id="downloadBtn">Download Sample File</button>
+        <div class="output" id="downloadOutput"></div>
       </div>
     </div>
 
@@ -782,6 +797,35 @@
 
         newWindow.document.close();
         newTabOutput.textContent = "New tab opened successfully";
+      });
+
+      // File Upload
+      const fileUpload = document.getElementById("fileUpload");
+      const uploadOutput = document.getElementById("uploadOutput");
+
+      fileUpload.addEventListener("change", () => {
+        const file = fileUpload.files[0];
+        uploadOutput.textContent = file
+          ? `Selected file: ${file.name}`
+          : "No file selected";
+      });
+
+      // File Download
+      const downloadBtn = document.getElementById("downloadBtn");
+      const downloadOutput = document.getElementById("downloadOutput");
+
+      downloadBtn.addEventListener("click", () => {
+        const content = "This is a sample file for Playwright download practice.";
+        const blob = new Blob([content], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "sample.txt";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        downloadOutput.textContent = "Download initiated!";
       });
     </script>
   </body>
