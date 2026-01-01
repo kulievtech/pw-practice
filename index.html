@@ -472,10 +472,17 @@
         <input type="file" id="fileUpload" multiple />
         <div class="output" id="uploadOutput">No file selected</div>
 
-        <!-- Download -->
-        <p style="margin-top: 20px">Click the button to download a sample file:</p>
-        <button id="downloadBtn">Download Sample File</button>
-        <div class="output" id="downloadOutput"></div>
+        <!-- Single File Download -->
+        <p>Click the button to download a single sample file:</p>
+        <button id="singleDownloadBtn">Download Single File</button>
+        <div class="output" id="singleDownloadOutput"></div>
+
+        <!-- Multiple Files Download -->
+        <p style="margin-top: 20px">
+          Click the button to download three sample files at once:
+        </p>
+        <button id="multiDownloadBtn">Download Multiple Files</button>
+        <div class="output" id="multiDownloadOutput"></div>
       </div>
     </div>
 
@@ -814,22 +821,57 @@
         }
       });
 
-      // File Download
-      const downloadBtn = document.getElementById("downloadBtn");
-      const downloadOutput = document.getElementById("downloadOutput");
+      // Single File Download
+      const singleDownloadBtn = document.getElementById("singleDownloadBtn");
+      const singleDownloadOutput = document.getElementById("singleDownloadOutput");
 
-      downloadBtn.addEventListener("click", () => {
-        const content = "This is a sample file for Playwright download practice.";
+      singleDownloadBtn.addEventListener("click", () => {
+        const content = "This is a single sample file for Playwright download practice.";
         const blob = new Blob([content], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "sample.txt";
+        a.download = "single_sample.txt";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        downloadOutput.textContent = "Download initiated!";
+        singleDownloadOutput.textContent = "Single file download initiated!";
+      });
+
+      // Multiple Files Download
+      const multiDownloadBtn = document.getElementById("multiDownloadBtn");
+      const multiDownloadOutput = document.getElementById("multiDownloadOutput");
+
+      multiDownloadBtn.addEventListener("click", () => {
+        const files = [
+          {
+            name: "file1.txt",
+            content: "This is file 1 for Playwright download practice.",
+          },
+          {
+            name: "file2.txt",
+            content: "This is file 2 for Playwright download practice.",
+          },
+          {
+            name: "file3.txt",
+            content: "This is file 3 for Playwright download practice.",
+          },
+        ];
+
+        files.forEach((file) => {
+          const blob = new Blob([file.content], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = file.name;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+
+        multiDownloadOutput.textContent = "Three files downloaded!";
       });
     </script>
   </body>
