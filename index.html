@@ -484,6 +484,48 @@
         <button id="multiDownloadBtn">Download Multiple Files</button>
         <div class="output" id="multiDownloadOutput"></div>
       </div>
+
+      <!-- Iframe Practice Section -->
+      <h2>Iframe Practice</h2>
+      <div class="section">
+        <p>Interact with the iframe below:</p>
+        <iframe
+          id="practiceIframe"
+          srcdoc='
+      <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; text-align:center; padding:20px; }
+            button { padding: 10px 20px; margin: 10px; background:#764ba2; color:white; border:none; border-radius:6px; cursor:pointer; }
+            input { padding: 8px; margin: 10px; border-radius:6px; border:1px solid #ccc; width:80%; }
+          </style>
+        </head>
+        <body>
+          <h3>Iframe Content</h3>
+          <button id="iframeBtn">Click Me</button>
+          <input type="text" id="iframeInput" placeholder="Type here..." />
+          <p id="iframeOutput">Output will appear here</p>
+          <script>
+            const btn = document.getElementById("iframeBtn");
+            const input = document.getElementById("iframeInput");
+            const output = document.getElementById("iframeOutput");
+
+            btn.addEventListener("click", () => {
+              output.textContent = "Button inside iframe clicked!";
+            });
+
+            input.addEventListener("input", () => {
+              output.textContent = "You typed: " + input.value;
+            });
+          </script>
+        </body>
+      </html>'
+          width="100%"
+          height="200"
+          style="border: 1px solid #ccc; border-radius: 8px"
+        ></iframe>
+        <div class="output" id="iframeSectionOutput"></div>
+      </div>
     </div>
 
     <script>
