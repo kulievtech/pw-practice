@@ -43,3 +43,35 @@ test("Interact with iframe using frameLocator", async ({ page }) => {
   // Assert
   await expect(iframe.locator("#iframeInput")).toHaveValue("Hello iFrame");
 });
+
+test("Interact with iframe using frame object", async ({ page }) => {
+  await page.goto("https://selectors-practice.onrender.com/");
+
+  // Get the iframe element handle
+  const frameHandle = await page.$("#practiceIframe");
+
+  if (!frameHandle) {
+    throw new Error("Iframe not found");
+  }
+
+  // Get the frame object
+  const frame = await frameHandle.contentFrame();
+
+  if (!frame) {
+    throw new Error("Could not get frame from iframe element");
+  }
+
+  // Click button inside iframe
+  await frame.locator("#iframeBtn").click();
+
+  // Assert
+  await expect(frame.locator("#iframeOutput")).toHaveText(
+    "Button inside iframe clicked!"
+  );
+
+  // Fill input inside iframe
+  await frame.locator("#iframeInput").fill("Hello iFrame");
+
+  // Assert
+  await expect(frame.locator("#iframeInput")).toHaveValue("Hello iFrame");
+});
