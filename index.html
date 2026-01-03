@@ -526,6 +526,23 @@
         ></iframe>
         <div class="output" id="iframeSectionOutput"></div>
       </div>
+
+      <!-- Popups & Alerts Section -->
+      <h2>Popups & Alerts</h2>
+      <div class="section">
+        <p>Practice handling browser dialogs and popups:</p>
+
+        <button id="alertBtn">Show Alert</button>
+
+        <button id="confirmBtn">Show Confirm</button>
+        <div class="output" id="confirmResult">No action yet</div>
+
+        <button id="promptBtn">Show Prompt</button>
+        <div class="output" id="promptResult">No name entered</div>
+
+        <button id="popupBtn">Open Popup Window</button>
+        <div class="output" id="popupResult">Popup not opened</div>
+      </div>
     </div>
 
     <script>
@@ -919,6 +936,82 @@
             }
           }, index * 200); // 200ms delay between each download
         });
+      });
+
+      // =====================
+      // POPUPS & ALERTS
+      // =====================
+
+      // Alert
+      document.getElementById("alertBtn").addEventListener("click", () => {
+        alert("Hello! This is a simple alert dialog.");
+      });
+
+      // Confirm
+      document.getElementById("confirmBtn").addEventListener("click", () => {
+        const result = confirm("Do you want to continue?");
+        document.getElementById("confirmResult").textContent = result
+          ? "Accepted"
+          : "Cancelled";
+      });
+
+      // Prompt
+      document.getElementById("promptBtn").addEventListener("click", () => {
+        const name = prompt("Please enter your name:");
+        document.getElementById("promptResult").textContent = name
+          ? `Hello, ${name}`
+          : "No name entered";
+      });
+
+      // Popup Window
+      document.getElementById("popupBtn").addEventListener("click", () => {
+        const popup = window.open("", "_blank", "width=500,height=400");
+
+        popup.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Popup Window</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+          .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+          }
+          button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h2 id="popupTitle">Popup Page</h2>
+          <p>This is a popup window.</p>
+          <button onclick="window.close()">Close Popup</button>
+        </div>
+      </body>
+    </html>
+  `);
+
+        popup.document.close();
+        document.getElementById("popupResult").textContent =
+          "Popup window opened successfully";
       });
     </script>
   </body>
