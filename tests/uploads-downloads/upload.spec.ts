@@ -40,3 +40,4 @@ test("fileChooser - Upload file via file chooser", async ({ page }) => {
   // Verify upload
   await expect(page.locator("#uploadOutput")).toHaveText("Selected files: resume.pdf");
 });
+// 
