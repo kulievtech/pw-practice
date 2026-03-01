@@ -20,7 +20,9 @@ test("Check Element Text", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Verify the text content of the paragraph in the Text Section
-  const textSectionParagraph = await page.locator("#textParagraph").textContent();
+  const textSectionParagraph = await page
+    .locator("#textParagraph")
+    .textContent();
   expect(textSectionParagraph).toContain("sample text");
 });
 
@@ -42,7 +44,9 @@ test("Check Element State", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Check if the login button is enabled
-  await expect(page.locator("form[id='loginForm'] button[type='submit']")).toBeEnabled();
+  await expect(
+    page.locator("form[id='loginForm'] button[type='submit']"),
+  ).toBeEnabled();
 
   // Check if the "Remember Me" checkbox is checked by default
   await expect(page.locator("#rememberMe")).toBeChecked();
@@ -52,7 +56,9 @@ test("Check Element State", async ({ page }) => {
 
   // Check a checkbox and verify it's checked
   await page.locator("div.checkbox-group input[value='Option 1']").check();
-  await expect(page.locator("div.checkbox-group input[value='Option 1']")).toBeChecked();
+  await expect(
+    page.locator("div.checkbox-group input[value='Option 1']"),
+  ).toBeChecked();
 });
 
 test("Check Element Count", async ({ page }) => {
@@ -73,18 +79,23 @@ test("Assertions on Attributes & CSS", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Verify the placeholder attribute of the username input field
-  await expect(page.locator("#username")).toHaveAttribute("placeholder", "Username");
+  await expect(page.locator("#username")).toHaveAttribute(
+    "placeholder",
+    "Username",
+  );
 
   // Verify the background color of the header
   await expect(page.locator("//button[text()='Login']")).toHaveCSS(
     "border-radius",
-    "8px"
+    "8px",
   );
 });
 
 test("Assertions on API Response", async ({ page }) => {
   // Make an API request to a sample endpoint and verify the response
-  const response = await page.request.get("https://jsonplaceholder.typicode.com/posts/1");
+  const response = await page.request.get(
+    "https://jsonplaceholder.typicode.com/posts/1",
+  );
   expect(response.status()).toBe(200);
 
   // Verify specific fields in the JSON response
@@ -105,3 +116,5 @@ test("Combining Multiple Assertions", async ({ page }) => {
   expect(await element.textContent()).toBeFalsy();
   await expect(element).toHaveClass(/output/);
 });
+
+// test
