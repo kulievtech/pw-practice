@@ -17,7 +17,9 @@ test("Filling & Typing", async ({ page }) => {
   await page.fill("#username", "myUsername");
 
   // Typing Input Field
-  await page.locator("#email").pressSequentially("qa@tester.com", { delay: 300 });
+  await page
+    .locator("#email")
+    .pressSequentially("qa@tester.com", { delay: 300 });
 });
 
 test("Checkboxes & Radio Buttons", async ({ page }) => {
@@ -35,6 +37,8 @@ test("Checkboxes & Radio Buttons", async ({ page }) => {
   // Selecting a Radio Button
   await page.getByRole("radio", { name: "Choice A" }).check();
 });
+
+test("Test name is Akbarali", async () => {});
 
 test("Dropdowns", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
@@ -95,7 +99,10 @@ test("Mouse Actions - Drag and Drop", async ({ page }) => {
   }
 
   // Move to the source element
-  await page.mouse.move(source.x + source.width / 2, source.y + source.height / 2);
+  await page.mouse.move(
+    source.x + source.width / 2,
+    source.y + source.height / 2,
+  );
 
   // Hold mouse button down
   await page.mouse.down();
@@ -104,7 +111,7 @@ test("Mouse Actions - Drag and Drop", async ({ page }) => {
   await page.mouse.move(
     target.x + target.width / 2,
     target.y + target.height / 2,
-    { steps: 20 } // smooth movement
+    { steps: 20 }, // smooth movement
   );
 
   // Release mouse
@@ -117,7 +124,9 @@ test("Drag & Drop", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Scroll to Drag and Drop section
-  await page.locator("//h2[text()='Todo Drag & Drop']").scrollIntoViewIfNeeded();
+  await page
+    .locator("//h2[text()='Todo Drag & Drop']")
+    .scrollIntoViewIfNeeded();
 
   // Get locators
   const finishReportTodo = page.locator("//li[text()='Finish report']");
