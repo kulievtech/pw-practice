@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -188,7 +188,9 @@
         background: #f1f1f1;
         border-radius: 10px;
         border: 2px dashed #ccc;
-        transition: background 0.2s, border-color 0.2s;
+        transition:
+          background 0.2s,
+          border-color 0.2s;
       }
       .drag-item {
         padding: 12px;
@@ -242,6 +244,19 @@
       #openNewTabBtn:hover {
         background: #1e8449;
       }
+      #exampleLink {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 15px;
+        background: #764ba2;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      #exampleLink:hover {
+        background: #5a2d82;
+      }
     </style>
   </head>
   <body>
@@ -274,7 +289,9 @@
       <!-- Text Section -->
       <h2>Text Section</h2>
       <div class="section">
-        <p id="textParagraph">This is a sample text for Playwright assertions.</p>
+        <p id="textParagraph">
+          This is a sample text for Playwright assertions.
+        </p>
       </div>
 
       <!-- Form with Labels -->
@@ -291,7 +308,11 @@
       <!-- Search Box -->
       <h2>Search Box</h2>
       <div class="section">
-        <input type="text" id="searchBox" placeholder="Search up your favorite fruit" />
+        <input
+          type="text"
+          id="searchBox"
+          placeholder="Search up your favorite fruit"
+        />
         <ul id="searchOptions">
           <li>Apple</li>
           <li>Banana</li>
@@ -347,7 +368,11 @@
       <!-- Textarea -->
       <h2>Textarea</h2>
       <div class="section">
-        <textarea id="textArea" placeholder="Write something..." rows="4"></textarea>
+        <textarea
+          id="textArea"
+          placeholder="Write something..."
+          rows="4"
+        ></textarea>
         <div class="output" id="textareaOutput"></div>
       </div>
 
@@ -361,7 +386,11 @@
       <!-- Product List -->
       <h2>Product List</h2>
       <div class="section">
-        <input type="text" id="productSearch" placeholder="Filter products..." />
+        <input
+          type="text"
+          id="productSearch"
+          placeholder="Filter products..."
+        />
         <ul class="product-list" id="productList">
           <li class="product-item">Laptop</li>
           <li class="product-item">Phone</li>
@@ -397,7 +426,10 @@
       <!-- Mouse Actions Section -->
       <h2>Mouse Actions</h2>
       <div class="section">
-        <p>Drag the box into the drop zone using mouse or Playwright mouse actions:</p>
+        <p>
+          Drag the box into the drop zone using mouse or Playwright mouse
+          actions:
+        </p>
         <div style="position: relative; height: 150px">
           <div
             id="mouseBox"
@@ -442,13 +474,17 @@
       <h2>Keyboard Actions</h2>
       <div class="section">
         <input type="text" id="keyboardInput" placeholder="Type something..." />
-        <div class="output" id="keyboardOutput">Typed text will appear here</div>
+        <div class="output" id="keyboardOutput">
+          Typed text will appear here
+        </div>
       </div>
 
       <!-- Waiting for Elements Section -->
       <h2>Waiting for Elements</h2>
       <div class="section" id="waitingSection">
-        <p id="welcomeMessage" style="display: none">Welcome! Prepare to load data...</p>
+        <p id="welcomeMessage" style="display: none">
+          Welcome! Prepare to load data...
+        </p>
         <button id="loadDataButton">Load Data</button>
         <div id="data" class="output"></div>
         <button id="nextStepButton" style="margin-top: 10px">Next Step</button>
@@ -462,6 +498,11 @@
         <button id="openNewTabBtn">Open Page in New Tab</button>
 
         <div class="output" id="newTabOutput"></div>
+
+        <!-- Example Anchor Link -->
+        <a href="https://example.com" target="_blank" id="exampleLink">
+          Visit Example.com
+        </a>
       </div>
 
       <!-- File Upload & Download Section -->
@@ -569,19 +610,19 @@
         .getElementById("btnClick")
         .addEventListener(
           "click",
-          () => (btnOutput.textContent = "Click button clicked")
+          () => (btnOutput.textContent = "Click button clicked"),
         );
       document
         .getElementById("btnDoubleClick")
         .addEventListener(
           "dblclick",
-          () => (btnOutput.textContent = "Double click detected")
+          () => (btnOutput.textContent = "Double click detected"),
         );
       document
         .getElementById("disabledButton")
         .addEventListener(
           "click",
-          () => (btnOutput.textContent = "Disabled button clicked")
+          () => (btnOutput.textContent = "Disabled button clicked"),
         );
 
       // Form with Labels
@@ -599,13 +640,17 @@
 
       // Search Box
       const searchBox = document.getElementById("searchBox");
-      const searchOptions = Array.from(document.querySelectorAll("#searchOptions li"));
+      const searchOptions = Array.from(
+        document.querySelectorAll("#searchOptions li"),
+      );
       const searchOutput = document.getElementById("searchOutput");
       searchBox.addEventListener("input", () => {
         const term = searchBox.value.toLowerCase();
         searchOptions.forEach(
           (li) =>
-            (li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none")
+            (li.style.display = li.textContent.toLowerCase().includes(term)
+              ? ""
+              : "none"),
         );
         searchOutput.textContent = term ? `Filtering for: ${term}` : "";
       });
@@ -621,7 +666,7 @@
           checkboxOutput.textContent = `Checked: ${
             selected.length ? selected.join(", ") : "None"
           }`;
-        })
+        }),
       );
 
       // Radio Buttons
@@ -631,7 +676,7 @@
         r.addEventListener("change", () => {
           const selected = Array.from(radios).find((r) => r.checked);
           radioOutput.textContent = `Selected: ${selected ? selected.value : "None"}`;
-        })
+        }),
       );
 
       // Dropdown
@@ -649,7 +694,7 @@
       toggleSwitch.addEventListener(
         "change",
         () =>
-          (toggleOutput.textContent = `Toggle is ${toggleSwitch.checked ? "ON" : "OFF"}`)
+          (toggleOutput.textContent = `Toggle is ${toggleSwitch.checked ? "ON" : "OFF"}`),
       );
 
       // Textarea
@@ -657,7 +702,7 @@
       const textareaOutput = document.getElementById("textareaOutput");
       textarea.addEventListener(
         "input",
-        () => (textareaOutput.textContent = `Typed text: ${textarea.value}`)
+        () => (textareaOutput.textContent = `Typed text: ${textarea.value}`),
       );
 
       // Button with data-testid
@@ -665,7 +710,7 @@
       const testIdOutput = document.getElementById("testIdOutput");
       testIdButton.addEventListener(
         "click",
-        () => (testIdOutput.textContent = "Data-testid button clicked")
+        () => (testIdOutput.textContent = "Data-testid button clicked"),
       );
 
       // Product List
@@ -675,19 +720,21 @@
         item.addEventListener("click", () => {
           item.classList.toggle("selected");
           const selected = Array.from(
-            document.querySelectorAll(".product-item.selected")
+            document.querySelectorAll(".product-item.selected"),
           ).map((i) => i.textContent);
           selectedProducts.textContent = selected.length
             ? `Selected products: ${selected.join(", ")}`
             : "No products selected";
-        })
+        }),
       );
       const productSearch = document.getElementById("productSearch");
       productSearch.addEventListener("input", () => {
         const term = productSearch.value.toLowerCase();
         products.forEach(
           (p) =>
-            (p.style.display = p.textContent.toLowerCase().includes(term) ? "" : "none")
+            (p.style.display = p.textContent.toLowerCase().includes(term)
+              ? ""
+              : "none"),
         );
       });
 
@@ -696,7 +743,7 @@
       const submenuItem = document.getElementById("submenuItem");
       submenuItem.addEventListener(
         "click",
-        () => (hoverOutput.textContent = "Submenu clicked!")
+        () => (hoverOutput.textContent = "Submenu clicked!"),
       );
 
       // Keyboard Actions
@@ -801,23 +848,31 @@
 
       // WAITING FOR ELEMENTS
       setTimeout(
-        () => (document.getElementById("welcomeMessage").style.display = "block"),
-        1000
+        () =>
+          (document.getElementById("welcomeMessage").style.display = "block"),
+        1000,
       );
-      document.getElementById("loadDataButton").addEventListener("click", () => {
-        const dataDiv = document.getElementById("data");
-        dataDiv.textContent = "Loading data...";
-        setTimeout(() => (dataDiv.textContent = "Data loaded successfully!"), 1500);
-      });
-      document.getElementById("nextStepButton").addEventListener("click", () => {
-        const btn = document.getElementById("nextStepButton");
-        btn.disabled = true;
-        btn.textContent = "Processing...";
-        setTimeout(() => {
-          btn.textContent = "Step Completed!";
-          btn.disabled = false;
-        }, 2000);
-      });
+      document
+        .getElementById("loadDataButton")
+        .addEventListener("click", () => {
+          const dataDiv = document.getElementById("data");
+          dataDiv.textContent = "Loading data...";
+          setTimeout(
+            () => (dataDiv.textContent = "Data loaded successfully!"),
+            1500,
+          );
+        });
+      document
+        .getElementById("nextStepButton")
+        .addEventListener("click", () => {
+          const btn = document.getElementById("nextStepButton");
+          btn.disabled = true;
+          btn.textContent = "Processing...";
+          setTimeout(() => {
+            btn.textContent = "Step Completed!";
+            btn.disabled = false;
+          }, 2000);
+        });
 
       // New Tab / Window
       const openNewTabBtn = document.getElementById("openNewTabBtn");
@@ -882,10 +937,13 @@
 
       // Single File Download
       const singleDownloadBtn = document.getElementById("singleDownloadBtn");
-      const singleDownloadOutput = document.getElementById("singleDownloadOutput");
+      const singleDownloadOutput = document.getElementById(
+        "singleDownloadOutput",
+      );
 
       singleDownloadBtn.addEventListener("click", () => {
-        const content = "This is a single sample file for Playwright download practice.";
+        const content =
+          "This is a single sample file for Playwright download practice.";
         const blob = new Blob([content], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -900,7 +958,9 @@
 
       // Multiple Files Download
       const multiDownloadBtn = document.getElementById("multiDownloadBtn");
-      const multiDownloadOutput = document.getElementById("multiDownloadOutput");
+      const multiDownloadOutput = document.getElementById(
+        "multiDownloadOutput",
+      );
 
       multiDownloadBtn.addEventListener("click", () => {
         const files = [
