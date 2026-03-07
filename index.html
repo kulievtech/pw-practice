@@ -8,53 +8,52 @@
   </head>
   <body>
     <div class="container">
-      <!-- Login Form -->
-      <h2 title="Login-form">Login Form</h2>
-      <form id="loginForm">
-        <input id="username" type="text" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
-        <input type="checkbox" id="rememberMe" checked /> Remember Me
-        <select id="country">
-          <option value="USA">USA</option>
-          <option value="Canada">Canada</option>
-          <option value="UK">UK</option>
-          <option value="Germany">Germany</option>
-        </select>
-        <button type="submit">Login</button>
-        <div class="output" id="loginMessage"></div>
-      </form>
-
-      <!-- Buttons Section -->
-      <h2>Buttons</h2>
       <div class="section">
+        <h2 title="Login-form">Login Form</h2>
+        <form id="loginForm">
+          <input id="username" type="text" placeholder="Username" />
+          <input type="password" id="password" placeholder="Password" />
+          <input type="checkbox" id="rememberMe" checked /> Remember Me
+          <select id="country">
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">UK</option>
+            <option value="Germany">Germany</option>
+          </select>
+          <button type="submit">Login</button>
+          <div class="output" id="loginMessage"></div>
+        </form>
+      </div>
+
+      <div class="section">
+        <h2>Buttons</h2>
         <button id="btnClick">Click Me</button>
         <button id="btnDoubleClick">Double Click Me</button>
         <button id="disabledButton" disabled>Disabled Button</button>
         <div class="output" id="buttonOutput"></div>
       </div>
 
-      <!-- Text Section -->
-      <h2>Text Section</h2>
       <div class="section">
+        <h2>Text Section</h2>
         <p id="textParagraph">
           This is a sample text for Playwright assertions.
         </p>
       </div>
 
-      <!-- Form with Labels -->
-      <h2>Form with Labels</h2>
-      <form id="labelForm">
-        <label for="email">Email</label>
-        <input id="email" type="email" />
-        <label for="pass">Password</label>
-        <input id="pass" type="password" />
-        <button type="submit">Submit Form</button>
-        <div class="output" id="labelFormOutput"></div>
-      </form>
-
-      <!-- Search Box -->
-      <h2>Search Box</h2>
       <div class="section">
+        <h2>Form with Labels</h2>
+        <form id="labelForm">
+          <label for="email">Email</label>
+          <input id="email" type="email" />
+          <label for="pass">Password</label>
+          <input id="pass" type="password" />
+          <button type="submit">Submit Form</button>
+          <div class="output" id="labelFormOutput"></div>
+        </form>
+      </div>
+
+      <div class="section">
+        <h2>Search Box</h2>
         <input
           type="text"
           id="searchBox"
@@ -72,26 +71,23 @@
         <div class="output" id="searchOutput"></div>
       </div>
 
-      <!-- Checkboxes Section -->
-      <h2>Checkboxes</h2>
       <div class="section checkbox-group">
+        <h2>Checkboxes</h2>
         <label><input type="checkbox" value="Option 1" />Option 1</label>
         <label><input type="checkbox" value="Option 2" />Option 2</label>
         <label><input type="checkbox" value="Option 3" />Option 3</label>
         <div class="output" id="checkboxOutput"></div>
       </div>
 
-      <!-- Radio Buttons Section -->
-      <h2>Radio Buttons</h2>
       <div class="section radio-group">
+        <h2>Radio Buttons</h2>
         <label><input type="radio" name="choice" value="A" />Choice A</label>
         <label><input type="radio" name="choice" value="B" />Choice B</label>
         <div class="output" id="radioOutput"></div>
       </div>
 
-      <!-- Dropdown Section -->
-      <h2>Dropdown</h2>
       <div class="section">
+        <h2>Dropdown</h2>
         <select id="dropdownMenu">
           <option value="">Choose your favorite color</option>
           <option value="Red">Red</option>
@@ -102,12 +98,10 @@
         <div class="output" id="dropdownOutput"></div>
       </div>
 
-      <!-- Custom Dropdown (No Select Tag) -->
-      <h2>Custom Dropdown</h2>
       <div class="section">
+        <h2>Custom Dropdown</h2>
         <div class="custom-dropdown">
           <div id="dropdownDisplay" class="dropdown-display">Select a city</div>
-
           <ul id="dropdownOptions" class="dropdown-options">
             <li>New York</li>
             <li>London</li>
@@ -116,13 +110,11 @@
             <li>Dubai</li>
           </ul>
         </div>
-
         <div class="output" id="customDropdownOutput">No city selected</div>
       </div>
 
-      <!-- Toggle Switch -->
-      <h2>Toggle Switch</h2>
       <div class="section">
+        <h2>Toggle Switch</h2>
         <label class="toggle-switch">
           <input type="checkbox" id="toggleSwitch" />
           <span alt="toggle-switch" class="slider"></span>
@@ -130,9 +122,8 @@
         <div class="output" id="toggleOutput"></div>
       </div>
 
-      <!-- Textarea -->
-      <h2>Textarea</h2>
       <div class="section">
+        <h2>Textarea</h2>
         <textarea
           id="textArea"
           placeholder="Write something..."
@@ -141,16 +132,14 @@
         <div class="output" id="textareaOutput"></div>
       </div>
 
-      <!-- Button with data-testid -->
-      <h2>Button with data-testid</h2>
       <div class="section">
+        <h2>Button with data-testid</h2>
         <button data-testid="submit-button" id="testIdButton">Submit</button>
         <div class="output" id="testIdOutput"></div>
       </div>
 
-      <!-- Product List -->
-      <h2>Product List</h2>
       <div class="section">
+        <h2>Product List</h2>
         <input
           type="text"
           id="productSearch"
@@ -166,9 +155,8 @@
         <div class="output" id="selectedProducts"></div>
       </div>
 
-      <!-- Hover Menu -->
-      <h2>Hover Menu</h2>
       <div class="section" style="position: relative">
+        <h2>Hover Menu</h2>
         <div style="display: flex; align-items: center; gap: 10px">
           <div
             class="menu"
@@ -188,9 +176,8 @@
         </div>
       </div>
 
-      <!-- Mouse Actions Section -->
-      <h2>Mouse Actions</h2>
       <div class="section">
+        <h2>Mouse Actions</h2>
         <p>
           Drag the box into the drop zone using mouse or Playwright mouse
           actions:
@@ -216,9 +203,8 @@
         </div>
       </div>
 
-      <!-- Todo Drag & Drop Section -->
-      <h2>Todo Drag & Drop</h2>
       <div class="section" id="todoSection">
+        <h2>Todo Drag & Drop</h2>
         <div style="display: flex; gap: 20px; flex-wrap: wrap">
           <div style="flex: 1; min-width: 200px">
             <h3>Todo</h3>
@@ -235,18 +221,16 @@
         </div>
       </div>
 
-      <!-- Keyboard Actions -->
-      <h2>Keyboard Actions</h2>
       <div class="section">
+        <h2>Keyboard Actions</h2>
         <input type="text" id="keyboardInput" placeholder="Type something..." />
         <div class="output" id="keyboardOutput">
           Typed text will appear here
         </div>
       </div>
 
-      <!-- Waiting for Elements Section -->
-      <h2>Waiting for Elements</h2>
       <div class="section" id="waitingSection">
+        <h2>Waiting for Elements</h2>
         <p id="welcomeMessage" style="display: none">
           Welcome! Prepare to load data...
         </p>
@@ -255,35 +239,24 @@
         <button id="nextStepButton" style="margin-top: 10px">Next Step</button>
       </div>
 
-      <!-- New Tab Practice -->
-      <h2>New Tab / Window</h2>
       <div class="section">
+        <h2>New Tab / Window</h2>
         <p>Click the button below to open a page in a new tab.</p>
-
         <button id="openNewTabBtn">Open Page in New Tab</button>
-
         <div class="output" id="newTabOutput"></div>
-
-        <!-- Example Anchor Link -->
         <a href="https://example.com" target="_blank" id="exampleLink"
           >Example Website</a
         >
       </div>
 
-      <!-- File Upload & Download Section -->
-      <h2>File Upload & Download</h2>
       <div class="section">
-        <!-- Upload -->
+        <h2>File Upload & Download</h2>
         <p>Upload one or more files to see their names displayed below:</p>
         <input type="file" id="fileUpload" multiple />
         <div class="output" id="uploadOutput">No file selected</div>
-
-        <!-- Single File Download -->
         <p>Click the button to download a single sample file:</p>
         <button id="singleDownloadBtn">Download Single File</button>
         <div class="output" id="singleDownloadOutput"></div>
-
-        <!-- Multiple Files Download -->
         <p style="margin-top: 20px">
           Click the button to download three sample files at once:
         </p>
@@ -291,9 +264,8 @@
         <div class="output" id="multiDownloadOutput"></div>
       </div>
 
-      <!-- Iframe Practice Section -->
-      <h2>Iframe Practice</h2>
       <div class="section">
+        <h2>Iframe Practice</h2>
         <p>Interact with the iframe below:</p>
         <iframe
           id="practiceIframe"
@@ -333,19 +305,14 @@
         <div class="output" id="iframeSectionOutput"></div>
       </div>
 
-      <!-- Popups & Alerts Section -->
-      <h2>Popups & Alerts</h2>
       <div class="section">
+        <h2>Popups & Alerts</h2>
         <p>Practice handling browser dialogs and popups:</p>
-
         <button id="alertBtn">Show Alert</button>
-
         <button id="confirmBtn">Show Confirm</button>
         <div class="output" id="confirmResult">No action yet</div>
-
         <button id="promptBtn">Show Prompt</button>
         <div class="output" id="promptResult">No name entered</div>
-
         <button id="popupBtn">Open Popup Window</button>
         <div class="output" id="popupResult">Popup not opened</div>
       </div>
