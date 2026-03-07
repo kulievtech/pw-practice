@@ -151,6 +151,57 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Multi-Select Dropdown
+const multiDropdownDisplay = document.getElementById("multiDropdownDisplay");
+const multiDropdownOptions = document.getElementById("multiDropdownOptions");
+const multiDropdownOutput = document.getElementById("multiDropdownOutput");
+
+// Toggle dropdown open/close
+multiDropdownDisplay.addEventListener("click", () => {
+  const isOpen = multiDropdownOptions.style.display === "block";
+  multiDropdownOptions.style.display = isOpen ? "none" : "block";
+});
+
+// Clickable <li> toggles checkbox
+multiDropdownOptions.querySelectorAll("li").forEach((li) => {
+  li.addEventListener("click", (e) => {
+    // Prevent double toggle if clicking directly on checkbox
+    if (e.target.tagName !== "INPUT") {
+      const checkbox = li.querySelector("input[type=checkbox]");
+      checkbox.checked = !checkbox.checked;
+    }
+
+    // Update output
+    const selected = Array.from(
+      multiDropdownOptions.querySelectorAll("input[type=checkbox]:checked"),
+    ).map((c) => c.value);
+
+    multiDropdownOutput.textContent = selected.length
+      ? `Selected hobbies: ${selected.join(", ")}`
+      : "No hobbies selected";
+  });
+});
+
+// Also update output if checkbox clicked directly
+multiDropdownOptions.querySelectorAll("input[type=checkbox]").forEach((cb) => {
+  cb.addEventListener("change", () => {
+    const selected = Array.from(
+      multiDropdownOptions.querySelectorAll("input[type=checkbox]:checked"),
+    ).map((c) => c.value);
+
+    multiDropdownOutput.textContent = selected.length
+      ? `Selected hobbies: ${selected.join(", ")}`
+      : "No hobbies selected";
+  });
+});
+
+// Close dropdown if clicked outside
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".multi-dropdown")) {
+    multiDropdownOptions.style.display = "none";
+  }
+});
+
 // Toggle Switch
 const toggleSwitch = document.getElementById("toggleSwitch");
 const toggleOutput = document.getElementById("toggleOutput");
