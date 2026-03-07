@@ -257,6 +257,37 @@
       #exampleLink:hover {
         background: #5a2d82;
       }
+      .custom-dropdown {
+        position: relative;
+        width: 100%;
+      }
+      .dropdown-display {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+      }
+      .dropdown-options {
+        list-style: none;
+        padding: 0;
+        margin: 5px 0 0 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: white;
+        display: none;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+      }
+      .dropdown-options li {
+        padding: 10px;
+        cursor: pointer;
+      }
+      .dropdown-options li:hover {
+        background: #764ba2;
+        color: white;
+      }
       button:disabled {
         background: #b8a9cc;
         cursor: not-allowed;
@@ -362,6 +393,24 @@
           <option value="Yellow">Yellow</option>
         </select>
         <div class="output" id="dropdownOutput"></div>
+      </div>
+
+      <!-- Custom Dropdown (No Select Tag) -->
+      <h2>Custom Dropdown</h2>
+      <div class="section">
+        <div class="custom-dropdown">
+          <div id="dropdownDisplay" class="dropdown-display">Select a city</div>
+
+          <ul id="dropdownOptions" class="dropdown-options">
+            <li>New York</li>
+            <li>London</li>
+            <li>Tokyo</li>
+            <li>Paris</li>
+            <li>Dubai</li>
+          </ul>
+        </div>
+
+        <div class="output" id="customDropdownOutput">No city selected</div>
       </div>
 
       <!-- Toggle Switch -->
@@ -695,6 +744,36 @@
         dropdownOutput.textContent = dropdownMenu.value
           ? `Selected: ${dropdownMenu.value}`
           : "No option selected";
+      });
+
+      // Custom Dropdown
+      const dropdownDisplay = document.getElementById("dropdownDisplay");
+      const dropdownOptions = document.getElementById("dropdownOptions");
+      const customDropdownOutput = document.getElementById(
+        "customDropdownOutput",
+      );
+
+      // Toggle dropdown
+      dropdownDisplay.addEventListener("click", () => {
+        dropdownOptions.style.display =
+          dropdownOptions.style.display === "block" ? "none" : "block";
+      });
+
+      // Select option
+      dropdownOptions.querySelectorAll("li").forEach((option) => {
+        option.addEventListener("click", () => {
+          dropdownDisplay.textContent = option.textContent;
+          customDropdownOutput.textContent =
+            "Selected city: " + option.textContent;
+          dropdownOptions.style.display = "none";
+        });
+      });
+
+      // Close dropdown if clicked outside
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".custom-dropdown")) {
+          dropdownOptions.style.display = "none";
+        }
       });
 
       // Toggle Switch
