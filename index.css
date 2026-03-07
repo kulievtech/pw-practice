@@ -16,7 +16,6 @@ body {
   max-width: 900px;
 }
 
-/* Improved H2 styling inside sections */
 .section h2 {
   color: #5a2d82;
   font-size: 2.6rem;
@@ -339,4 +338,57 @@ input:checked + .slider:before {
 .dropdown-options li:hover {
   background: #764ba2;
   color: white;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-display {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.dropdown-options {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  display: none;
+  position: absolute;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.dropdown-options li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-options li:hover {
+  background: #764ba2;
+  color: white;
+}
+
+#customDropdownSearch {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 5px 0;
+  display: none; /* hidden until dropdown clicked */
+}
+
+#customDropdownSearch:focus {
+  outline: none;
+  border-color: #764ba2;
+  box-shadow: 0 0 5px rgba(118, 75, 162, 0.3);
 }

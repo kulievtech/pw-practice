@@ -100,30 +100,55 @@ dropdownMenu.addEventListener("change", () => {
 });
 
 // Custom Dropdown
-const dropdownDisplay = document.getElementById("dropdownDisplay");
-const dropdownOptions = document.getElementById("dropdownOptions");
-const customDropdownOutput = document.getElementById("customDropdownOutput");
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdownDisplay = document.getElementById("dropdownDisplay");
+  const dropdownOptions = document.getElementById("dropdownOptions");
+  const customDropdownOutput = document.getElementById("customDropdownOutput");
+  const customDropdownSearch = document.getElementById("customDropdownSearch");
 
-// Toggle dropdown
-dropdownDisplay.addEventListener("click", () => {
-  dropdownOptions.style.display =
-    dropdownOptions.style.display === "block" ? "none" : "block";
-});
-
-// Select option
-dropdownOptions.querySelectorAll("li").forEach((option) => {
-  option.addEventListener("click", () => {
-    dropdownDisplay.textContent = option.textContent;
-    customDropdownOutput.textContent = "Selected city: " + option.textContent;
-    dropdownOptions.style.display = "none";
+  // Show/Hide dropdown & search input
+  dropdownDisplay.addEventListener("click", () => {
+    const isOpen = dropdownOptions.style.display === "block";
+    dropdownOptions.style.display = isOpen ? "none" : "block";
+    customDropdownSearch.style.display = isOpen ? "none" : "block";
+    customDropdownSearch.value = "";
+    filterOptions("");
+    if (!isOpen) customDropdownSearch.focus();
   });
-});
 
-// Close dropdown if clicked outside
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".custom-dropdown")) {
-    dropdownOptions.style.display = "none";
+  // Filter dropdown options based on search input
+  function filterOptions(term) {
+    const options = dropdownOptions.querySelectorAll("li");
+    options.forEach((li) => {
+      li.style.display = li.textContent
+        .toLowerCase()
+        .includes(term.toLowerCase())
+        ? "block"
+        : "none";
+    });
   }
+
+  customDropdownSearch.addEventListener("input", (e) => {
+    filterOptions(e.target.value);
+  });
+
+  // Selecting an option
+  dropdownOptions.querySelectorAll("li").forEach((option) => {
+    option.addEventListener("click", () => {
+      dropdownDisplay.textContent = option.textContent;
+      customDropdownOutput.textContent = "Selected city: " + option.textContent;
+      dropdownOptions.style.display = "none";
+      customDropdownSearch.style.display = "none";
+    });
+  });
+
+  // Close dropdown if clicked outside
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".custom-dropdown")) {
+      dropdownOptions.style.display = "none";
+      customDropdownSearch.style.display = "none";
+    }
+  });
 });
 
 // Toggle Switch
