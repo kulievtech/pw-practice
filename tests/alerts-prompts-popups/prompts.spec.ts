@@ -5,6 +5,7 @@ test("Handle prompt dialog", async ({ page }) => {
 
   page.once("dialog", async (dialog) => {
     console.log(dialog.message()); // Prints: Please enter your name:
+    await page.waitForTimeout(5000);
     await dialog.accept("John"); // Enter "John" and click OK
     // await dialog.dismiss();     // Click Cancel
   });

@@ -6,7 +6,7 @@ test("Handle alert", async ({ page }) => {
   // Listen for the alert event
   page.once("dialog", async (dialog) => {
     console.log(dialog.message()); // Prints: Hello! This is an alert
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await dialog.accept(); // Clicks OK
   });
 
@@ -19,9 +19,8 @@ test("Accept - Handle confirm dialog", async ({ page }) => {
 
   page.once("dialog", async (dialog) => {
     console.log(dialog.message()); // Prints: Do you want to continue?
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await dialog.accept(); // Clicks OK
-    // await dialog.dismiss(); // Clicks Cancel
   });
 
   await page.click("#confirmBtn");
@@ -36,8 +35,7 @@ test("Dismiss - Handle confirm dialog", async ({ page }) => {
 
   page.once("dialog", async (dialog) => {
     console.log(dialog.message()); // Prints: Do you want to continue?
-    await page.waitForTimeout(2000);
-    // await dialog.accept(); // Clicks OK
+    await page.waitForTimeout(5000);
     await dialog.dismiss(); // Clicks Cancel
   });
 
