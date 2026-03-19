@@ -7,7 +7,9 @@ test("setInputFiles - Upload a file directly", async ({ page }) => {
   await page.setInputFiles("#fileUpload", "documents/resume.pdf");
 
   // Verify upload success
-  await expect(page.locator("#uploadOutput")).toHaveText("Selected files: resume.pdf");
+  await expect(page.locator("#uploadOutput")).toHaveText(
+    "Selected files: resume.pdf",
+  );
 });
 
 test("setInputFiles - Upload multiple files directly", async ({ page }) => {
@@ -21,7 +23,7 @@ test("setInputFiles - Upload multiple files directly", async ({ page }) => {
 
   // Verify upload success
   await expect(page.locator("#uploadOutput")).toHaveText(
-    "Selected files: resume.pdf, miami.jpeg"
+    "Selected files: resume.pdf, miami.jpeg",
   );
 });
 
@@ -38,5 +40,7 @@ test("fileChooser - Upload file via file chooser", async ({ page }) => {
   await fileChooser.setFiles("documents/resume.pdf");
 
   // Verify upload
-  await expect(page.locator("#uploadOutput")).toHaveText("Selected files: resume.pdf");
+  await expect(page.locator("#uploadOutput")).toHaveText(
+    "Selected files: resume.pdf",
+  );
 });

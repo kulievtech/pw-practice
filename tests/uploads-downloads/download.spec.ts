@@ -14,13 +14,12 @@ test("Download a single file", async ({ page }) => {
 
   // Verify download
   await expect(page.locator("#singleDownloadOutput")).toHaveText(
-    "Single file download initiated!"
+    "Single file download initiated!",
   );
 });
 
 test("Download multiple files", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
-
   await page.click("#multiDownloadBtn");
 
   // Collect downloads in an array
@@ -31,11 +30,13 @@ test("Download multiple files", async ({ page }) => {
 
   // Save them
   await Promise.all(
-    downloads.map((download, i) => download.saveAs(`downloads/file${i + 1}.txt`))
+    downloads.map((download, i) =>
+      download.saveAs(`downloads/file${i + 1}.txt`),
+    ),
   );
 
   // Verify UI text
   await expect(page.locator("#multiDownloadOutput")).toHaveText(
-    "Three files downloaded!"
+    "Three files downloaded!",
   );
 });
