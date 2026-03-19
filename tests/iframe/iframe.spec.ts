@@ -13,7 +13,7 @@ test.skip("Interact with iframe using page", async ({ page }) => {
 
   // Assert
   await expect(iframe.locator("#iframeOutput")).toHaveText(
-    "Button inside iframe clicked!"
+    "Button inside iframe clicked!",
   );
 
   // Fill input inside iframe
@@ -34,7 +34,7 @@ test("Interact with iframe using frameLocator", async ({ page }) => {
 
   // Assert
   await expect(iframe.locator("#iframeOutput")).toHaveText(
-    "Button inside iframe clicked!"
+    "Button inside iframe clicked!",
   );
 
   // Fill input inside iframe
@@ -48,25 +48,14 @@ test("Interact with iframe using frame object", async ({ page }) => {
   await page.goto("https://selectors-practice.onrender.com/");
 
   // Get the iframe element handle
-  const frameHandle = await page.$("#practiceIframe");
-
-  if (!frameHandle) {
-    throw new Error("Iframe not found");
-  }
-
-  // Get the frame object
-  const frame = await frameHandle.contentFrame();
-
-  if (!frame) {
-    throw new Error("Could not get frame from iframe element");
-  }
+  const frame = page.locator("#practiceIframe").contentFrame();
 
   // Click button inside iframe
   await frame.locator("#iframeBtn").click();
 
   // Assert
   await expect(frame.locator("#iframeOutput")).toHaveText(
-    "Button inside iframe clicked!"
+    "Button inside iframe clicked!",
   );
 
   // Fill input inside iframe
