@@ -24,6 +24,7 @@ test("Download multiple files", async ({ page }) => {
 
   // Collect downloads in an array
   const downloads: Download[] = [];
+
   for (let i = 0; i < 3; i++) {
     downloads.push(await page.waitForEvent("download"));
   }
