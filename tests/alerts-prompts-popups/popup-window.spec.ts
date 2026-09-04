@@ -12,6 +12,8 @@ test("context and page - Handle popup window with", async ({
     page.click("#popupBtn"), // Trigger popup
   ]);
 
+  await page.waitForTimeout(3000);
+
   // Wait for the popup to load
   await popup.waitForLoadState("domcontentloaded");
 
@@ -24,7 +26,10 @@ test("context and page - Handle popup window with", async ({
   const popupTitle = await popup.locator("#popupTitle").innerText();
   expect(popupTitle).toBe("Popup Page");
 
+  await page.waitForTimeout(3000);
+
   await popup.close(); // Close popup
+  await page.close();
 });
 
 test("page and popup - Handle popup window with", async ({ page }) => {
@@ -36,6 +41,8 @@ test("page and popup - Handle popup window with", async ({ page }) => {
     page.click("#popupBtn"), // Trigger popup
   ]);
 
+  await page.waitForTimeout(3000);
+
   // Wait for the popup to load
   await popup.waitForLoadState("domcontentloaded");
 
@@ -48,5 +55,8 @@ test("page and popup - Handle popup window with", async ({ page }) => {
   const popupTitle = await popup.locator("#popupTitle").innerText();
   expect(popupTitle).toBe("Popup Page");
 
+  await page.waitForTimeout(3000);
+
   await popup.close(); // Close popup
+  await page.close();
 });
